@@ -351,12 +351,37 @@ Glow：0 0 18px rgba(91, 183, 255, 0.65)
 
 # 7. 🔽 Select 下拉框组件
 
-**外层类名：** `.select-aurora`
-可使用 `<select>` 或自定义 div 结构。
+**类名：**
+- 原生 Select：`.select-aurora`
+- 自定义 Select：`.select-custom-aurora`
 
 ---
 
-## 7.1 Day Mode — Snow Mist Select
+## 7.1 实现方式选择
+
+### 原生 Select（简单场景）
+- ✅ 使用原生 `<select>` 元素
+- ✅ 浏览器自动处理可访问性
+- ✅ 实现简单，无需 JavaScript
+- ❌ 下拉列表样式由浏览器控制，无法完全自定义
+- ❌ 不同浏览器/操作系统表现不一致
+
+**适用场景：** 简单的表单，对视觉统一性要求不高
+
+### 自定义 Select（完全控制）
+- ✅ 完全控制下拉列表样式
+- ✅ 跨浏览器视觉统一
+- ✅ 可扩展（搜索、多选等）
+- ❌ 需要编写 JavaScript
+- ❌ 需要手动实现无障碍支持
+
+**适用场景：** 需要统一视觉体验、高级交互功能
+
+---
+
+## 7.2 原生 Select 规范
+
+### 7.2.1 Day Mode — Snow Mist Select
 
 **样式定义：**
 
@@ -367,8 +392,8 @@ Glow：0 0 18px rgba(91, 183, 255, 0.65)
 边框：1px solid #D8DFE4
 文字颜色：#1C1E20
 圆角：999px
-Padding：0 14px（右侧预留箭头）
-箭头颜色：#6D747A
+Padding：0 14px
+箭头颜色：#6D747A（浏览器默认）
 阴影：0 2px 4px rgba(0,0,0,0.03)
 ```
 
@@ -376,15 +401,21 @@ Padding：0 14px（右侧预留箭头）
 
 * Hover 边框色：`#A8D8F8`
 * Focus：
-
   ```css
   border-color: #8EC8F2;
   box-shadow: 0 0 0 2px rgba(142, 200, 242, 0.3);
   ```
 
----
+**Disabled 状态：**
+```css
+background: #F8FAFB;
+color: #9AA2A8;
+border-color: #EEF1F3;
+opacity: 0.6;
+cursor: not-allowed;
+```
 
-## 7.2 Night Mode — Aurora Deep Select
+### 7.2.2 Night Mode — Aurora Deep Select
 
 **样式定义：**
 
@@ -396,18 +427,334 @@ Padding：0 14px（右侧预留箭头）
 文字颜色：#F1F6FF
 圆角：999px
 Padding：0 14px
-箭头颜色：#9BA8C0
+箭头颜色：#9BA8C0（浏览器默认）
 ```
 
 **交互：**
 
 * Hover 边框：`#4BE4C9`
 * Focus：
-
   ```css
   border-color: #5BB7FF;
   box-shadow: 0 0 0 2px rgba(91, 183, 255, 0.45);
   ```
+
+**Disabled 状态：**
+```css
+background: #0B1321;
+color: #6D747A;
+border-color: #233043;
+opacity: 0.5;
+cursor: not-allowed;
+```
+
+---
+
+## 7.3 自定义 Select 规范
+
+### 7.3.1 组件结构
+
+```html
+<div class="select-custom-aurora" role="combobox" aria-expanded="false">
+  <button class="select-trigger" type="button">
+    <span class="select-value">请选择</span>
+    <span class="select-arrow">▼</span>
+  </button>
+  <ul class="select-dropdown" role="listbox" hidden>
+    <li role="option" data-value="value1">选项 1</li>
+    <li role="option" data-value="value2">选项 2</li>
+  </ul>
+</div>
+```
+
+### 7.3.2 Select 触发器（.select-trigger）
+
+**Day Mode：**
+```text
+尺寸：240x40px
+背景：#EEF1F3
+边框：1px solid #D8DFE4
+文字颜色：#1C1E20
+圆角：999px
+Padding：0 40px 0 14px（右侧预留箭头空间）
+阴影：0 2px 4px rgba(0,0,0,0.03)
+
+Hover：
+  border-color: #A8D8F8
+
+Focus：
+  border-color: #8EC8F2
+  box-shadow: 0 0 0 2px rgba(142, 200, 242, 0.3)
+```
+
+**Night Mode：**
+```text
+背景：#121C2C
+边框：1px solid #233043
+文字颜色：#F1F6FF
+
+Hover：
+  border-color: #4BE4C9
+
+Focus：
+  border-color: #5BB7FF
+  box-shadow: 0 0 0 2px rgba(91, 183, 255, 0.45)
+```
+
+### 7.3.3 下拉箭头（.select-arrow）
+
+```text
+位置：right: 14px（绝对定位）
+颜色：Day Mode #6D747A，Night Mode #9BA8C0
+字符：▼ 或自定义 SVG
+动画：打开时旋转 180°（0.25s cubic-bezier）
+```
+
+### 7.3.4 下拉列表（.select-dropdown）
+
+**Day Mode：**
+```text
+背景：#FFFFFF
+边框：1px solid #D8DFE4
+圆角：12px
+阴影：0 4px 12px rgba(0,0,0,0.1)
+Padding：8px 0
+最大高度：240px（超出滚动）
+```
+
+**Night Mode：**
+```text
+背景：#1A2332
+边框：1px solid #233043
+圆角：12px
+阴影：0 4px 16px rgba(0,0,0,0.5)
+```
+
+**展开/收起动画：**
+```css
+opacity: 0 → 1
+transform: translateY(-8px) → translateY(0)
+duration: 0.2s cubic-bezier(0.4, 0, 0.2, 1)
+```
+
+### 7.3.5 下拉选项（li[role="option"]）
+
+**Day Mode：**
+```text
+Padding：10px 14px
+文字颜色：#1C1E20
+
+Hover：
+  background: #F0F8FF
+
+选中状态（aria-selected="true"）：
+  background: #E3F2FD
+  color: #5BB7FF
+  显示 ✓ 符号（::after）
+```
+
+**Night Mode：**
+```text
+文字颜色：#F1F6FF
+
+Hover：
+  background: #233043
+  box-shadow: 0 0 12px rgba(75, 228, 201, 0.15)
+
+选中状态：
+  background: linear-gradient(90deg, rgba(75, 228, 201, 0.15), rgba(91, 183, 255, 0.15))
+  color: #5BB7FF
+  显示 ✓ 符号
+```
+
+---
+
+## 7.4 状态变体
+
+### 7.4.1 Error 状态
+
+**Day Mode：**
+```css
+.select-custom-aurora.error .select-trigger {
+  border-color: #FF6B6B;
+}
+
+.select-custom-aurora.error .select-trigger:focus {
+  border-color: #D9534F;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+}
+```
+
+**Night Mode：**
+```css
+.select-custom-aurora.error .select-trigger {
+  border-color: #FF6B6B;
+  box-shadow: 0 0 12px rgba(255, 107, 107, 0.4);
+}
+```
+
+### 7.4.2 Success 状态
+
+**Day Mode：**
+```css
+.select-custom-aurora.success .select-trigger {
+  border-color: #5CB85C;
+}
+
+.select-custom-aurora.success .select-trigger:focus {
+  border-color: #4CAE4C;
+  box-shadow: 0 0 0 3px rgba(92, 184, 92, 0.2);
+}
+```
+
+**Night Mode：**
+```css
+.select-custom-aurora.success .select-trigger {
+  border-color: #4BE4C9;
+  box-shadow: 0 0 12px rgba(75, 228, 201, 0.4);
+}
+```
+
+### 7.4.3 Disabled 状态
+
+**Day Mode：**
+```css
+.select-custom-aurora.disabled .select-trigger {
+  background: #F8FAFB;
+  color: #9AA2A8;
+  border-color: #EEF1F3;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+```
+
+**Night Mode：**
+```css
+.select-custom-aurora.disabled .select-trigger {
+  background: #0B1321;
+  color: #6D747A;
+  border-color: #233043;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+```
+
+---
+
+## 7.5 键盘导航
+
+**支持的键盘操作：**
+
+| 按键 | 功能 |
+|------|------|
+| `Enter` / `Space` | 打开/关闭下拉列表；选中当前焦点选项 |
+| `↓` 箭头 | 向下移动焦点；关闭时打开列表 |
+| `↑` 箭头 | 向上移动焦点；关闭时打开列表 |
+| `Home` | 跳到第一个选项 |
+| `End` | 跳到最后一个选项 |
+| `Esc` | 关闭下拉列表 |
+| 字母键 | 快速跳转到匹配的选项（可选） |
+
+---
+
+## 7.6 无障碍访问（Accessibility）
+
+**必需 ARIA 属性：**
+
+```html
+<!-- 容器 -->
+<div class="select-custom-aurora"
+     role="combobox"
+     aria-expanded="false"
+     aria-haspopup="listbox">
+
+  <!-- 触发器 -->
+  <button class="select-trigger"
+          type="button"
+          aria-label="选择主题">
+    <span class="select-value">请选择主题</span>
+    <span class="select-arrow">▼</span>
+  </button>
+
+  <!-- 下拉列表 -->
+  <ul class="select-dropdown"
+      role="listbox"
+      hidden>
+
+    <!-- 选项 -->
+    <li role="option"
+        data-value="value1"
+        aria-selected="false"
+        tabindex="-1">
+      选项 1
+    </li>
+  </ul>
+</div>
+```
+
+**ARIA 属性说明：**
+
+- `role="combobox"` — 标识为组合框组件
+- `aria-expanded` — 指示下拉列表是否展开
+- `aria-haspopup="listbox"` — 标识有弹出列表
+- `role="listbox"` — 标识为选项列表
+- `role="option"` — 标识为可选项
+- `aria-selected` — 标识选项是否被选中
+- `aria-label` — 为触发器提供无障碍标签
+
+**焦点管理：**
+
+1. 下拉列表关闭时，焦点在触发器上
+2. 打开时，焦点保持在触发器（通过键盘导航选项）
+3. 选择后关闭，焦点返回触发器
+4. 点击外部关闭，焦点保持在触发器
+
+---
+
+## 7.7 响应式设计
+
+**移动端适配（<= 768px）：**
+
+```css
+@media (max-width: 768px) {
+  .select-custom-aurora {
+    width: 100%;
+  }
+
+  .select-trigger {
+    height: 48px;  /* 满足最小触摸尺寸 */
+    font-size: 16px;  /* 避免 iOS 自动缩放 */
+  }
+
+  .select-dropdown li {
+    padding: 14px 16px;
+    font-size: 16px;
+  }
+}
+```
+
+---
+
+## 7.8 使用建议
+
+**何时使用原生 Select：**
+- ✅ 简单的表单字段
+- ✅ 快速原型开发
+- ✅ 对视觉一致性要求不高
+- ✅ 不需要自定义下拉列表样式
+
+**何时使用自定义 Select：**
+- ✅ 需要统一的跨浏览器视觉体验
+- ✅ 需要自定义下拉列表样式（背景、hover 效果等）
+- ✅ 需要高级功能（搜索、多选、分组等）
+- ✅ 品牌一致性要求高的产品
+
+**最佳实践：**
+1. 始终提供可见的 `<label>` 标签
+2. 为 required 字段添加 `aria-required="true"`
+3. 提供清晰的错误提示和成功反馈
+4. 确保键盘导航流畅
+5. 在移动端使用足够大的触摸目标（48px）
 
 ---
 

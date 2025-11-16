@@ -416,6 +416,272 @@
             box-shadow: 0 0 0 2px rgba(91, 183, 255, 0.45);
         }
 
+        /* Disabled state for native select */
+        body.day .select-aurora:disabled {
+            background: #F8FAFB;
+            color: #9AA2A8;
+            border-color: #EEF1F3;
+            cursor: not-allowed;
+            opacity: 0.6;
+            box-shadow: none;
+        }
+
+        body.night .select-aurora:disabled {
+            background: #0B1321;
+            color: #6D747A;
+            border-color: #233043;
+            cursor: not-allowed;
+            opacity: 0.5;
+            box-shadow: none;
+        }
+
+        /* ===== 自定义 Select 组件 ===== */
+        .select-custom-aurora {
+            position: relative;
+            width: 240px;
+        }
+
+        .select-trigger {
+            width: 100%;
+            height: 40px;
+            border-radius: 999px;
+            padding: 0 40px 0 14px;
+            font-size: 14px;
+            border: 1px solid;
+            cursor: pointer;
+            text-align: left;
+            background: none;
+            font-family: inherit;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .select-value {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10px;
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .select-custom-aurora.open .select-arrow {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        /* Day Mode - Select Trigger */
+        body.day .select-trigger {
+            background: #EEF1F3;
+            border-color: #D8DFE4;
+            color: #1C1E20;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+        }
+
+        body.day .select-trigger:hover {
+            border-color: #A8D8F8;
+        }
+
+        body.day .select-trigger:focus {
+            border-color: #8EC8F2;
+            box-shadow: 0 0 0 2px rgba(142, 200, 242, 0.3);
+            outline: none;
+        }
+
+        body.day .select-arrow {
+            color: #6D747A;
+        }
+
+        /* Night Mode - Select Trigger */
+        body.night .select-trigger {
+            background: #121C2C;
+            border-color: #233043;
+            color: #F1F6FF;
+        }
+
+        body.night .select-trigger:hover {
+            border-color: #4BE4C9;
+        }
+
+        body.night .select-trigger:focus {
+            border-color: #5BB7FF;
+            box-shadow: 0 0 0 2px rgba(91, 183, 255, 0.45);
+            outline: none;
+        }
+
+        body.night .select-arrow {
+            color: #9BA8C0;
+        }
+
+        /* Dropdown List */
+        .select-dropdown {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            margin: 0;
+            padding: 8px 0;
+            list-style: none;
+            border-radius: 12px;
+            border: 1px solid;
+            max-height: 240px;
+            overflow-y: auto;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-8px);
+            transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .select-dropdown:not([hidden]) {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        /* Day Mode - Dropdown */
+        body.day .select-dropdown {
+            background: #FFFFFF;
+            border-color: #D8DFE4;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Night Mode - Dropdown */
+        body.night .select-dropdown {
+            background: #1A2332;
+            border-color: #233043;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Dropdown Options */
+        .select-dropdown li {
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .select-dropdown li::after {
+            content: '✓';
+            opacity: 0;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .select-dropdown li[aria-selected="true"]::after {
+            opacity: 1;
+        }
+
+        /* Day Mode - Options */
+        body.day .select-dropdown li {
+            color: #1C1E20;
+        }
+
+        body.day .select-dropdown li:hover {
+            background: #F0F8FF;
+        }
+
+        body.day .select-dropdown li[aria-selected="true"] {
+            background: #E3F2FD;
+            color: #5BB7FF;
+        }
+
+        /* Night Mode - Options */
+        body.night .select-dropdown li {
+            color: #F1F6FF;
+        }
+
+        body.night .select-dropdown li:hover {
+            background: #233043;
+            box-shadow: 0 0 12px rgba(75, 228, 201, 0.15);
+        }
+
+        body.night .select-dropdown li[aria-selected="true"] {
+            background: linear-gradient(90deg, rgba(75, 228, 201, 0.15), rgba(91, 183, 255, 0.15));
+            color: #5BB7FF;
+        }
+
+        /* Disabled State */
+        .select-custom-aurora.disabled .select-trigger {
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        body.day .select-custom-aurora.disabled .select-trigger {
+            background: #F8FAFB;
+            color: #9AA2A8;
+            border-color: #EEF1F3;
+            opacity: 0.6;
+            box-shadow: none;
+        }
+
+        body.night .select-custom-aurora.disabled .select-trigger {
+            background: #0B1321;
+            color: #6D747A;
+            border-color: #233043;
+            opacity: 0.5;
+            box-shadow: none;
+        }
+
+        /* Error State */
+        body.day .select-custom-aurora.error .select-trigger {
+            border-color: #FF6B6B;
+        }
+
+        body.day .select-custom-aurora.error .select-trigger:focus {
+            border-color: #D9534F;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+
+        body.night .select-custom-aurora.error .select-trigger {
+            border-color: #FF6B6B;
+            box-shadow: 0 0 12px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Success State */
+        body.day .select-custom-aurora.success .select-trigger {
+            border-color: #5CB85C;
+        }
+
+        body.day .select-custom-aurora.success .select-trigger:focus {
+            border-color: #4CAE4C;
+            box-shadow: 0 0 0 3px rgba(92, 184, 92, 0.2);
+        }
+
+        body.night .select-custom-aurora.success .select-trigger {
+            border-color: #4BE4C9;
+            box-shadow: 0 0 12px rgba(75, 228, 201, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .select-custom-aurora {
+                width: 100%;
+            }
+
+            .select-trigger {
+                height: 48px;
+                font-size: 16px;
+            }
+
+            .select-dropdown li {
+                padding: 14px 16px;
+                font-size: 16px;
+            }
+        }
+
         /* ===== Checkbox 复选框 ===== */
         .checkbox-wrapper {
             display: flex;
@@ -1274,22 +1540,104 @@
         <!-- Select 下拉框 -->
         <section class="component-section">
             <h2 class="section-title">3. Select 下拉框组件</h2>
-            <p class="section-description">胶囊形下拉选择框，hover 和 focus 时有边框高亮</p>
+            <p class="section-description">胶囊形下拉选择框，支持原生和自定义两种实现方式</p>
+
+            <!-- 原生 Select -->
+            <h3 style="font-size: 16px; margin: 24px 0 16px 0; font-weight: 600;">原生 Select（简单场景）</h3>
             <div class="component-showcase">
                 <div class="demo-group">
-                    <select class="select-aurora" aria-label="主题选择">
-                        <option>请选择主题</option>
-                        <option>雪山纯净</option>
-                        <option>极光迷人</option>
-                        <option>冰川蓝调</option>
+                    <label for="native-select-1" style="display: block; margin-bottom: 8px; font-size: 14px;">主题选择</label>
+                    <select id="native-select-1" class="select-aurora">
+                        <option value="">请选择主题</option>
+                        <option value="snow">雪山纯净</option>
+                        <option value="aurora">极光迷人</option>
+                        <option value="glacier">冰川蓝调</option>
                     </select>
                     <span class="state-label">Normal</span>
                 </div>
                 <div class="demo-group">
-                    <select class="select-aurora" disabled aria-label="禁用选择">
+                    <label for="native-select-2" style="display: block; margin-bottom: 8px; font-size: 14px;">禁用状态</label>
+                    <select id="native-select-2" class="select-aurora" disabled>
                         <option>禁用状态</option>
                     </select>
+                    <span class="state-label">Disabled（已修复样式）</span>
+                </div>
+            </div>
+
+            <!-- 自定义 Select -->
+            <h3 style="font-size: 16px; margin: 32px 0 16px 0; font-weight: 600;">自定义 Select（完全控制样式和交互）</h3>
+            <div class="component-showcase" style="flex-direction: column; align-items: flex-start; gap: 24px;">
+                <!-- Normal State -->
+                <div class="demo-group" style="width: 100%;">
+                    <label style="display: block; margin-bottom: 8px; font-size: 14px;">选择主题</label>
+                    <div class="select-custom-aurora" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+                        <button class="select-trigger" type="button" aria-label="选择主题">
+                            <span class="select-value">请选择主题</span>
+                            <span class="select-arrow">▼</span>
+                        </button>
+                        <ul class="select-dropdown" role="listbox" hidden>
+                            <li role="option" data-value="snow" tabindex="-1">雪山纯净</li>
+                            <li role="option" data-value="aurora" tabindex="-1">极光迷人</li>
+                            <li role="option" data-value="glacier" tabindex="-1">冰川蓝调</li>
+                        </ul>
+                    </div>
+                    <span class="state-label">Normal（点击查看下拉列表样式）</span>
+                </div>
+
+                <!-- Error State -->
+                <div class="demo-group" style="width: 100%;">
+                    <label style="display: block; margin-bottom: 8px; font-size: 14px;">必选字段</label>
+                    <div class="select-custom-aurora error" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+                        <button class="select-trigger" type="button" aria-label="必选字段">
+                            <span class="select-value">请选择...</span>
+                            <span class="select-arrow">▼</span>
+                        </button>
+                        <ul class="select-dropdown" role="listbox" hidden>
+                            <li role="option" data-value="option1" tabindex="-1">选项 1</li>
+                            <li role="option" data-value="option2" tabindex="-1">选项 2</li>
+                            <li role="option" data-value="option3" tabindex="-1">选项 3</li>
+                        </ul>
+                    </div>
+                    <span class="state-label" style="color: #FF6B6B;">Error（未选择必填项）</span>
+                </div>
+
+                <!-- Success State -->
+                <div class="demo-group" style="width: 100%;">
+                    <label style="display: block; margin-bottom: 8px; font-size: 14px;">已验证字段</label>
+                    <div class="select-custom-aurora success" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+                        <button class="select-trigger" type="button" aria-label="已验证字段">
+                            <span class="select-value">中国</span>
+                            <span class="select-arrow">▼</span>
+                        </button>
+                        <ul class="select-dropdown" role="listbox" hidden>
+                            <li role="option" data-value="cn" aria-selected="true" tabindex="-1">中国</li>
+                            <li role="option" data-value="us" tabindex="-1">美国</li>
+                            <li role="option" data-value="jp" tabindex="-1">日本</li>
+                        </ul>
+                    </div>
+                    <span class="state-label" style="color: #5CB85C;">Success（已选择）</span>
+                </div>
+
+                <!-- Disabled State -->
+                <div class="demo-group" style="width: 100%;">
+                    <label style="display: block; margin-bottom: 8px; font-size: 14px; opacity: 0.6;">禁用字段</label>
+                    <div class="select-custom-aurora disabled" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+                        <button class="select-trigger" type="button" aria-label="禁用字段" disabled>
+                            <span class="select-value">禁用状态</span>
+                            <span class="select-arrow">▼</span>
+                        </button>
+                    </div>
                     <span class="state-label">Disabled</span>
+                </div>
+
+                <!-- 使用说明 -->
+                <div class="demo-group" style="width: 100%; padding: 16px; border: 2px dashed rgba(91, 183, 255, 0.3); border-radius: 8px; background: rgba(91, 183, 255, 0.05);">
+                    <p style="margin: 0; font-size: 13px; line-height: 1.6;">
+                        <strong>💡 使用建议：</strong><br>
+                        • 简单场景使用原生 Select（浏览器默认下拉样式）<br>
+                        • 需要统一视觉体验使用自定义 Select（完全控制样式）<br>
+                        • 自定义 Select 支持键盘导航（↑↓ Enter Esc）和 ARIA 无障碍
+                    </p>
                 </div>
             </div>
         </section>
@@ -1804,6 +2152,165 @@
 
         showToastBtn.addEventListener('click', function() {
             showToast('通知标题', '这是一条 Aurora 主题的通知消息，将在 3 秒后自动消失。');
+        });
+
+        // ===== 自定义 Select 组件功能 =====
+        class CustomSelect {
+            constructor(element) {
+                this.element = element;
+                this.trigger = element.querySelector('.select-trigger');
+                this.valueDisplay = element.querySelector('.select-value');
+                this.dropdown = element.querySelector('.select-dropdown');
+                this.options = Array.from(element.querySelectorAll('[role="option"]'));
+                this.isOpen = false;
+                this.selectedIndex = -1;
+                this.focusedIndex = -1;
+
+                this.init();
+            }
+
+            init() {
+                // 绑定事件
+                this.trigger.addEventListener('click', (e) => this.toggle(e));
+                this.trigger.addEventListener('keydown', (e) => this.handleTriggerKeydown(e));
+
+                this.options.forEach((option, index) => {
+                    option.addEventListener('click', () => this.selectOption(index));
+                    option.addEventListener('mouseenter', () => this.focusOption(index));
+                });
+
+                // 点击外部关闭
+                document.addEventListener('click', (e) => this.handleOutsideClick(e));
+
+                // 检查是否有预选项
+                const preselected = this.options.findIndex(opt => opt.getAttribute('aria-selected') === 'true');
+                if (preselected !== -1) {
+                    this.selectedIndex = preselected;
+                }
+            }
+
+            toggle(e) {
+                e.stopPropagation();
+                if (this.element.classList.contains('disabled')) return;
+
+                this.isOpen ? this.close() : this.open();
+            }
+
+            open() {
+                this.isOpen = true;
+                this.element.classList.add('open');
+                this.element.setAttribute('aria-expanded', 'true');
+                this.dropdown.removeAttribute('hidden');
+
+                // 设置初始焦点
+                this.focusedIndex = this.selectedIndex !== -1 ? this.selectedIndex : 0;
+                this.focusOption(this.focusedIndex);
+            }
+
+            close() {
+                this.isOpen = false;
+                this.element.classList.remove('open');
+                this.element.setAttribute('aria-expanded', 'false');
+                this.dropdown.setAttribute('hidden', '');
+                this.trigger.focus();
+            }
+
+            selectOption(index) {
+                // 清除之前的选中
+                this.options.forEach(opt => opt.removeAttribute('aria-selected'));
+
+                // 设置新的选中
+                this.options[index].setAttribute('aria-selected', 'true');
+                this.selectedIndex = index;
+
+                // 更新显示
+                this.valueDisplay.textContent = this.options[index].textContent;
+
+                // 触发自定义事件
+                const value = this.options[index].getAttribute('data-value');
+                this.element.dispatchEvent(new CustomEvent('change', {
+                    detail: { value, text: this.options[index].textContent, index }
+                }));
+
+                this.close();
+            }
+
+            focusOption(index) {
+                if (index < 0 || index >= this.options.length) return;
+
+                this.options.forEach(opt => opt.classList.remove('focused'));
+                this.options[index].classList.add('focused');
+                this.focusedIndex = index;
+
+                // 滚动到可见区域
+                this.options[index].scrollIntoView({ block: 'nearest' });
+            }
+
+            handleTriggerKeydown(e) {
+                if (this.element.classList.contains('disabled')) return;
+
+                switch(e.key) {
+                    case 'Enter':
+                    case ' ':
+                        e.preventDefault();
+                        if (!this.isOpen) {
+                            this.open();
+                        } else if (this.focusedIndex !== -1) {
+                            this.selectOption(this.focusedIndex);
+                        }
+                        break;
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        if (!this.isOpen) {
+                            this.open();
+                        } else {
+                            this.focusOption(Math.min(this.focusedIndex + 1, this.options.length - 1));
+                        }
+                        break;
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        if (!this.isOpen) {
+                            this.open();
+                        } else {
+                            this.focusOption(Math.max(this.focusedIndex - 1, 0));
+                        }
+                        break;
+                    case 'Home':
+                        if (this.isOpen) {
+                            e.preventDefault();
+                            this.focusOption(0);
+                        }
+                        break;
+                    case 'End':
+                        if (this.isOpen) {
+                            e.preventDefault();
+                            this.focusOption(this.options.length - 1);
+                        }
+                        break;
+                    case 'Escape':
+                        if (this.isOpen) {
+                            e.preventDefault();
+                            this.close();
+                        }
+                        break;
+                }
+            }
+
+            handleOutsideClick(e) {
+                if (this.isOpen && !this.element.contains(e.target)) {
+                    this.close();
+                }
+            }
+        }
+
+        // 初始化所有自定义 Select
+        document.querySelectorAll('.select-custom-aurora').forEach(element => {
+            const select = new CustomSelect(element);
+
+            // 监听 change 事件（可选，用于调试）
+            element.addEventListener('change', (e) => {
+                console.log('Select changed:', e.detail);
+            });
         });
     </script>
 </body>
