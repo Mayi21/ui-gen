@@ -589,8 +589,11 @@ box-shadow: 0 0 8px rgba(91, 183, 255, 0.5);
 ## 11.1 结构
 
 * 一个带圆角的轨道（track）
-* 一个圆形滑块（thumb）
-* 可用 `data-checked="true/false"` 或类名控制状态
+* 一个圆形滑块（thumb），在轨道中**垂直居中**
+* 使用 `data-checked="true/false"` 控制状态
+* **状态语义：**
+  - Thumb 在左侧 = 关闭状态（`data-checked="false"`）
+  - Thumb 在右侧 = 开启状态（`data-checked="true"`）
 
 ---
 
@@ -599,28 +602,36 @@ box-shadow: 0 0 8px rgba(91, 183, 255, 0.5);
 **关闭状态：**
 
 ```text
-轨道背景：#D8DFE4
-轨道尺寸：宽 40px，高 22px
-轨道圆角：999px
+轨道：
+  背景：#D8DFE4
+  尺寸：宽 40px，高 22px
+  圆角：999px
+  display: inline-flex
+  align-items: center
 
 Thumb：
   尺寸：18x18px
   颜色：#FFFFFF
   阴影：0 1px 3px rgba(0,0,0,0.15)
-  位置：左侧 2px
+  位置：
+    - 水平：left: 2px
+    - 垂直：top: 50% + transform: translateY(-50%) [垂直居中]
+    - 说明：轨道高 22px，Thumb 高 18px，上下各留 2px 实现完美居中
 ```
 
 **开启状态：**
 
 ```text
 轨道背景：#A8D8F8
-Thumb 位置：右侧 2px
+Thumb 位置：transform: translateX(18px) translateY(-50%)
 ```
 
 动画：
 
 ```css
-transition: background-color 0.25s ease, transform 0.25s ease;
+transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+            transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+            box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 ```
 
 ---
@@ -645,7 +656,140 @@ Thumb：
   外 Glow：0 0 10px rgba(91, 183, 255, 0.8)
 ```
 
-Thumb 从左滑到右，用 `transform: translateX(...)` 实现。
+---
+
+## 11.4 设计变体
+
+### 基础版本（需配合清晰标签）
+```html
+<div style="display: flex; align-items: center; gap: 12px;">
+  <span>通知提醒</span>
+  <button role="switch" class="switch-aurora" data-checked="false">
+    <div class="switch-thumb"></div>
+  </button>
+</div>
+```
+
+### 推荐版本：标签 + 状态文字
+```html
+<div class="switch-with-label">
+  <span class="switch-label">通知提醒</span>
+  <button role="switch" class="switch-aurora" data-checked="false">
+    <div class="switch-thumb"></div>
+  </button>
+  <span class="switch-state-text">关闭</span>
+</div>
+```
+
+### 带图标版本（推荐用于主题切换）
+```html
+<div class="switch-with-icons">
+  <span class="switch-icon active">☀️</span>
+  <button role="switch" class="switch-aurora" data-checked="false">
+    <div class="switch-thumb"></div>
+  </button>
+  <span class="switch-icon">🌙</span>
+</div>
+```
+
+---
+
+## 11.5 状态指示最佳实践
+
+### ✅ 推荐做法：
+
+1. **使用单侧标签 + 状态文字**
+   ```
+   [通知提醒] ○──── 关闭
+   [通知提醒] ────● 已开启
+   ```
+
+2. **使用图标明确表达状态**（适合主题切换）
+   ```
+   ☀️ ○──── 🌙  (Day模式)
+   ☀️ ────● 🌙  (Night模式，Moon图标高亮)
+   ```
+
+3. **依赖颜色和位置组合**
+   - 左侧 + 灰色轨道 = 关闭
+   - 右侧 + 蓝色/渐变轨道 = 开启
+
+### ❌ 避免的反模式：
+
+1. **两侧标签设计**（会造成混淆）
+   ```
+   Day ○──── Night  ← 用户无法判断当前是什么模式
+   ```
+   - 问题：用户不知道开关位置代表当前状态还是目标状态
+   - 建议：改用上述推荐做法
+
+---
+
+## 11.6 无障碍访问（Accessibility）
+
+**必需属性：**
+
+```html
+<button role="switch"
+        class="switch-aurora"
+        data-checked="false"
+        aria-checked="false"
+        aria-label="通知提醒开关">
+  <div class="switch-thumb"></div>
+</button>
+```
+
+**要求：**
+
+1. 使用 `role="switch"` 语义化标签
+2. `aria-checked` 必须与 `data-checked` 保持同步
+3. 提供清晰的 `aria-label` 描述开关用途
+4. 支持键盘操作：
+   - `Space` 键：切换状态
+   - `Enter` 键：切换状态（可选）
+5. 确保有清晰的视觉状态指示（颜色 + 位置 + 文字/图标）
+
+---
+
+## 11.7 垂直居中实现方式
+
+**方法 1：使用 flexbox（推荐）**
+
+```css
+.switch-aurora {
+  display: inline-flex;
+  align-items: center;  /* 自动垂直居中子元素 */
+  width: 40px;
+  height: 22px;
+}
+
+.switch-thumb {
+  position: absolute;
+  left: 2px;
+  /* 不需要设置 top，由 align-items: center 处理 */
+}
+```
+
+**方法 2：使用 transform（当前实现）**
+
+```css
+.switch-thumb {
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  transform: translateY(-50%);  /* 垂直居中 */
+}
+
+/* 开启状态需要保持垂直居中 */
+.switch-aurora[data-checked="true"] .switch-thumb {
+  transform: translateX(18px) translateY(-50%);
+}
+```
+
+**计算说明：**
+- 轨道高度：22px
+- Thumb 高度：18px
+- 间距：(22px - 18px) / 2 = 2px（上下各 2px）
 
 ---
 

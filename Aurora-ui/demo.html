@@ -1,0 +1,1810 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora 主题 UI 组件完整预览</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 设计系统基础 - 字体系统 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+                         "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        /* Day Mode 基础样式 */
+        body.day {
+            background-color: #F8FAFB;
+            color: #1C1E20;
+        }
+
+        /* Night Mode 基础样式 */
+        body.night {
+            background-color: #0B1321;
+            color: #F1F6FF;
+        }
+
+        /* 焦点指示器 */
+        body.day *:focus-visible {
+            outline: 2px solid #8EC8F2;
+            outline-offset: 2px;
+        }
+
+        body.night *:focus-visible {
+            outline: 2px solid #5BB7FF;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(91, 183, 255, 0.2);
+        }
+
+        *:focus {
+            outline: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 页面头部 */
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        body.day .header h1 {
+            color: #1C1E20;
+        }
+
+        body.night .header h1 {
+            color: #F1F6FF;
+            text-shadow: 0 0 30px rgba(91, 183, 255, 0.4);
+        }
+
+        .header p {
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        body.day .header p {
+            color: #6D747A;
+        }
+
+        body.night .header p {
+            color: #9BA8C0;
+        }
+
+        /* 主题切换区域 */
+        .theme-toggle-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .theme-label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        body.day .theme-label {
+            color: #6D747A;
+        }
+
+        body.night .theme-label {
+            color: #9BA8C0;
+        }
+
+        /* 组件展示区域 */
+        .component-section {
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            line-height: 1.4;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        body.day .section-title {
+            color: #1C1E20;
+        }
+
+        body.night .section-title {
+            color: #F1F6FF;
+        }
+
+        .section-description {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        body.day .section-description {
+            color: #6D747A;
+        }
+
+        body.night .section-description {
+            color: #9BA8C0;
+        }
+
+        .component-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .state-label {
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 4px;
+            display: block;
+        }
+
+        body.day .state-label {
+            color: #6D747A;
+        }
+
+        body.night .state-label {
+            color: #9BA8C0;
+        }
+
+        .demo-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: flex-start;
+        }
+
+        /* ===== Button 按钮 ===== */
+        .btn-aurora {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 8px 20px;
+            height: 40px;
+            border-radius: 999px;
+            border: 1px solid;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        body.day .btn-aurora {
+            background-color: #A8D8F8;
+            color: #1C1E20;
+            border-color: #8EC8F2;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        body.day .btn-aurora:hover {
+            background-color: #8EC8F2;
+        }
+
+        body.day .btn-aurora:active {
+            background-color: #7CBCEB;
+        }
+
+        body.night .btn-aurora {
+            background: linear-gradient(120deg, #4BE4C9, #5BB7FF, #C68CFF);
+            color: #F1F6FF;
+            border-color: #4BE4C9;
+            box-shadow: 0 0 18px rgba(91, 183, 255, 0.65);
+        }
+
+        body.night .btn-aurora:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 22px rgba(91, 183, 255, 0.8);
+        }
+
+        body.night .btn-aurora:active {
+            transform: translateY(0);
+            filter: brightness(0.95);
+        }
+
+        /* Button Disabled */
+        body.day .btn-aurora:disabled {
+            background: #EEF1F3;
+            color: #9AA2A8;
+            border-color: #D8DFE4;
+            opacity: 0.6;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        body.night .btn-aurora:disabled {
+            background: #233043;
+            color: #6D747A;
+            border-color: #233043;
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Button Loading */
+        .btn-aurora.loading {
+            pointer-events: none;
+            cursor: wait;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+        }
+
+        body.day .spinner {
+            border-color: #1C1E20;
+            border-top-color: transparent;
+        }
+
+        body.night .spinner {
+            border-color: #F1F6FF;
+            border-top-color: transparent;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== Input 输入框 ===== */
+        .input-aurora {
+            width: 300px;
+            height: 40px;
+            border-radius: 12px;
+            padding: 0 12px;
+            font-size: 14px;
+            border: 1px solid;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+        }
+
+        body.day .input-aurora {
+            background: #FFFFFF;
+            border-color: #D8DFE4;
+            color: #1C1E20;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+        }
+
+        body.day .input-aurora::placeholder {
+            color: #9AA2A8;
+        }
+
+        body.day .input-aurora:hover {
+            border-color: #A8D8F8;
+        }
+
+        body.day .input-aurora:focus {
+            border-color: #8EC8F2;
+            box-shadow: 0 0 0 2px rgba(142, 200, 242, 0.3);
+        }
+
+        body.night .input-aurora {
+            background: #121C2C;
+            border-color: #233043;
+            color: #F1F6FF;
+        }
+
+        body.night .input-aurora::placeholder {
+            color: #9BA8C0;
+        }
+
+        body.night .input-aurora:hover {
+            border-color: #4BE4C9;
+        }
+
+        body.night .input-aurora:focus {
+            border-color: #5BB7FF;
+            box-shadow: 0 0 0 2px rgba(91, 183, 255, 0.45);
+        }
+
+        /* Input Disabled */
+        body.day .input-aurora:disabled {
+            background: #F8FAFB;
+            color: #9AA2A8;
+            border-color: #EEF1F3;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        body.night .input-aurora:disabled {
+            background: #0B1321;
+            color: #6D747A;
+            border-color: #233043;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        /* Input Error */
+        body.day .input-aurora.error {
+            border-color: #FF6B6B;
+        }
+
+        body.day .input-aurora.error:focus {
+            border-color: #D9534F;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+
+        body.night .input-aurora.error {
+            border-color: #FF6B6B;
+            box-shadow: 0 0 12px rgba(255, 107, 107, 0.4);
+        }
+
+        body.night .input-aurora.error:focus {
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.25);
+        }
+
+        /* Input Success */
+        body.day .input-aurora.success {
+            border-color: #5CB85C;
+        }
+
+        body.day .input-aurora.success:focus {
+            box-shadow: 0 0 0 3px rgba(92, 184, 92, 0.2);
+        }
+
+        body.night .input-aurora.success {
+            border-color: #4BE4C9;
+            box-shadow: 0 0 12px rgba(75, 228, 201, 0.4);
+        }
+
+        /* ===== Select 下拉框 ===== */
+        .select-aurora {
+            width: 240px;
+            height: 40px;
+            border-radius: 999px;
+            padding: 0 14px;
+            font-size: 14px;
+            border: 1px solid;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+        }
+
+        body.day .select-aurora {
+            background: #EEF1F3;
+            border-color: #D8DFE4;
+            color: #1C1E20;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+        }
+
+        body.day .select-aurora:hover {
+            border-color: #A8D8F8;
+        }
+
+        body.day .select-aurora:focus {
+            border-color: #8EC8F2;
+            box-shadow: 0 0 0 2px rgba(142, 200, 242, 0.3);
+        }
+
+        body.night .select-aurora {
+            background: #121C2C;
+            border-color: #233043;
+            color: #F1F6FF;
+        }
+
+        body.night .select-aurora:hover {
+            border-color: #4BE4C9;
+        }
+
+        body.night .select-aurora:focus {
+            border-color: #5BB7FF;
+            box-shadow: 0 0 0 2px rgba(91, 183, 255, 0.45);
+        }
+
+        /* ===== Checkbox 复选框 ===== */
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-aurora {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            border: 2px solid;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.day .checkbox-aurora {
+            background: #FFFFFF;
+            border-color: #D8DFE4;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        body.day .checkbox-aurora:hover {
+            border-color: #A8D8F8;
+        }
+
+        body.day .checkbox-aurora:checked {
+            background: #A8D8F8;
+            border-color: #8EC8F2;
+        }
+
+        body.day .checkbox-aurora:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #1C1E20;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        body.night .checkbox-aurora {
+            background: #121C2C;
+            border-color: #233043;
+        }
+
+        body.night .checkbox-aurora:hover {
+            border-color: #4BE4C9;
+        }
+
+        body.night .checkbox-aurora:checked {
+            background: linear-gradient(120deg, #4BE4C9, #5BB7FF);
+            border-color: #5BB7FF;
+            box-shadow: 0 0 8px rgba(91, 183, 255, 0.5);
+        }
+
+        body.night .checkbox-aurora:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #F1F6FF;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        body.day .checkbox-aurora:disabled {
+            background: #F8FAFB;
+            border-color: #EEF1F3;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        body.night .checkbox-aurora:disabled {
+            background: #0B1321;
+            border-color: #233043;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ===== Radio 单选框 ===== */
+        .radio-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .radio-aurora {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.day .radio-aurora {
+            background: #FFFFFF;
+            border-color: #D8DFE4;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        body.day .radio-aurora:hover {
+            border-color: #A8D8F8;
+        }
+
+        body.day .radio-aurora:checked {
+            border-color: #8EC8F2;
+        }
+
+        body.day .radio-aurora:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #A8D8F8;
+        }
+
+        body.night .radio-aurora {
+            background: #121C2C;
+            border-color: #233043;
+        }
+
+        body.night .radio-aurora:hover {
+            border-color: #4BE4C9;
+        }
+
+        body.night .radio-aurora:checked {
+            border-color: #5BB7FF;
+        }
+
+        body.night .radio-aurora:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: linear-gradient(120deg, #4BE4C9, #5BB7FF);
+            box-shadow: 0 0 8px rgba(91, 183, 255, 0.5);
+        }
+
+        /* ===== Card 卡片 ===== */
+        .card-aurora {
+            border-radius: 16px;
+            padding: 16px 20px;
+            border: 1px solid;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-aurora::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        body.day .card-aurora {
+            background: #FFFFFF;
+            border-color: #D8DFE4;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        body.day .card-aurora::before {
+            background: #A8D8F8;
+        }
+
+        body.day .card-aurora:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        body.night .card-aurora {
+            background: #121C2C;
+            border-color: #233043;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+        }
+
+        body.night .card-aurora::before {
+            background: linear-gradient(120deg, #4BE4C9, #5BB7FF, #C68CFF);
+        }
+
+        body.night .card-aurora:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            border-color: #4BE4C9;
+            box-shadow: 0 0 16px rgba(91, 183, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .card-title {
+            font-size: 16px;
+            line-height: 1.5;
+            font-weight: 700;
+            margin-bottom: 8px;
+            margin-top: 8px;
+        }
+
+        body.day .card-title {
+            color: #1C1E20;
+        }
+
+        body.night .card-title {
+            color: #F1F6FF;
+        }
+
+        .card-content {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        body.day .card-content {
+            color: #6D747A;
+        }
+
+        body.night .card-content {
+            color: #9BA8C0;
+        }
+
+        /* ===== Tag 标签 ===== */
+        .tag-aurora {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 999px;
+            padding: 2px 10px;
+            font-size: 12px;
+            border: 1px solid;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tag-aurora::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        body.day .tag-aurora {
+            background: rgba(168, 216, 248, 0.18);
+            border-color: #A8D8F8;
+            color: #1C1E20;
+        }
+
+        body.day .tag-aurora::before {
+            background: #8EC8F2;
+        }
+
+        body.night .tag-aurora {
+            background: rgba(91, 183, 255, 0.12);
+            border-color: rgba(91, 183, 255, 0.6);
+            color: #F1F6FF;
+            box-shadow: 0 0 8px rgba(91, 183, 255, 0.5);
+        }
+
+        body.night .tag-aurora::before {
+            background: #5BB7FF;
+        }
+
+        /* ===== Switch 开关 ===== */
+        .switch-aurora {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            width: 40px;
+            height: 22px;
+            border-radius: 999px;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+            transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.day .switch-aurora {
+            background: #D8DFE4;
+        }
+
+        body.day .switch-aurora[data-checked="true"] {
+            background: #A8D8F8;
+        }
+
+        body.night .switch-aurora {
+            background: #233043;
+        }
+
+        body.night .switch-aurora[data-checked="true"] {
+            background: linear-gradient(120deg, #4BE4C9, #5BB7FF, #C68CFF);
+        }
+
+        .switch-thumb {
+            position: absolute;
+            top: 50%;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            transform: translateY(-50%);
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.day .switch-thumb {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        }
+
+        body.night .switch-thumb {
+            background: #F1F6FF;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .switch-aurora[data-checked="true"] .switch-thumb {
+            transform: translateX(18px) translateY(-50%);
+        }
+
+        body.night .switch-aurora[data-checked="true"] .switch-thumb {
+            box-shadow: 0 0 10px rgba(91, 183, 255, 0.8);
+        }
+
+        /* Switch 变体 - 带图标 (用于主题切换) */
+        .switch-with-icons {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .switch-icon {
+            font-size: 18px;
+            line-height: 1;
+            opacity: 0.5;
+            transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .switch-icon.active {
+            opacity: 1;
+        }
+
+        /* Switch 变体 - 带标签 */
+        .switch-with-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .switch-label {
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.day .switch-label {
+            color: #1C1E20;
+        }
+
+        body.night .switch-label {
+            color: #F1F6FF;
+        }
+
+        .switch-state-text {
+            font-size: 13px;
+            opacity: 0.6;
+        }
+
+        /* ===== Tabs 标签页 ===== */
+        .tabs-aurora {
+            border-bottom: 1px solid;
+            display: flex;
+            gap: 24px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.day .tabs-aurora {
+            border-bottom-color: #D8DFE4;
+        }
+
+        body.night .tabs-aurora {
+            border-bottom-color: #233043;
+        }
+
+        .tab-aurora {
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        body.day .tab-aurora {
+            color: #6D747A;
+        }
+
+        body.day .tab-aurora.active {
+            color: #1C1E20;
+        }
+
+        body.day .tab-aurora.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #A8D8F8;
+        }
+
+        body.night .tab-aurora {
+            color: #9BA8C0;
+        }
+
+        body.night .tab-aurora.active {
+            color: #F1F6FF;
+        }
+
+        body.night .tab-aurora.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(120deg, #4BE4C9, #5BB7FF, #C68CFF);
+            box-shadow: 0 2px 8px rgba(91, 183, 255, 0.6);
+        }
+
+        .tab-content {
+            padding: 20px 0;
+            font-size: 14px;
+        }
+
+        body.day .tab-content {
+            color: #6D747A;
+        }
+
+        body.night .tab-content {
+            color: #9BA8C0;
+        }
+
+        /* ===== Modal 模态框 ===== */
+        .modal-backdrop-aurora {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        body.day .modal-backdrop-aurora {
+            background: rgba(28, 30, 32, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        body.night .modal-backdrop-aurora {
+            background: rgba(11, 19, 33, 0.7);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-aurora {
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 540px;
+            width: 100%;
+            position: relative;
+            z-index: 600;
+            animation: modal-enter 0.25s cubic-bezier(0, 0, 0.2, 1);
+        }
+
+        body.day .modal-aurora {
+            background: #FFFFFF;
+            border: 1px solid #D8DFE4;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        body.night .modal-aurora {
+            background: #121C2C;
+            border: 1px solid #233043;
+            box-shadow: 0 16px 60px rgba(0, 0, 0, 0.6);
+            border-top: 3px solid transparent;
+            background-image: linear-gradient(#121C2C, #121C2C), linear-gradient(120deg, #4BE4C9, #5BB7FF, #C68CFF);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+
+        @keyframes modal-enter {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-header {
+            font-size: 20px;
+            line-height: 1.4;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        body.day .modal-header {
+            color: #1C1E20;
+        }
+
+        body.night .modal-header {
+            color: #F1F6FF;
+        }
+
+        .modal-body {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        body.day .modal-body {
+            color: #6D747A;
+        }
+
+        body.night .modal-body {
+            color: #9BA8C0;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 24px;
+            transition: all 0.15s ease;
+        }
+
+        body.day .modal-close {
+            color: #6D747A;
+        }
+
+        body.day .modal-close:hover {
+            color: #1C1E20;
+        }
+
+        body.night .modal-close {
+            color: #9BA8C0;
+        }
+
+        body.night .modal-close:hover {
+            color: #F1F6FF;
+            text-shadow: 0 0 8px rgba(91, 183, 255, 0.5);
+        }
+
+        /* ===== Toast 通知 ===== */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 700;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .toast-aurora {
+            border-radius: 12px;
+            padding: 12px 16px;
+            min-width: 280px;
+            max-width: 400px;
+            border: 1px solid;
+            position: relative;
+            padding-left: 20px;
+            animation: toast-slide-in 0.3s cubic-bezier(0, 0, 0.2, 1);
+        }
+
+        @keyframes toast-slide-in {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast-aurora::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            border-radius: 12px 0 0 12px;
+        }
+
+        body.day .toast-aurora {
+            background: #FFFFFF;
+            border-color: #D8DFE4;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        body.day .toast-aurora::before {
+            background: #A8D8F8;
+        }
+
+        body.night .toast-aurora {
+            background: #121C2C;
+            border-color: #233043;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        body.night .toast-aurora::before {
+            background: linear-gradient(120deg, #4BE4C9, #5BB7FF);
+        }
+
+        .toast-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        body.day .toast-title {
+            color: #1C1E20;
+        }
+
+        body.night .toast-title {
+            color: #F1F6FF;
+        }
+
+        .toast-message {
+            font-size: 12px;
+        }
+
+        body.day .toast-message {
+            color: #6D747A;
+        }
+
+        body.night .toast-message {
+            color: #9BA8C0;
+        }
+
+        /* ===== Tooltip 工具提示 ===== */
+        .tooltip-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip-aurora {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 12px;
+            max-width: 220px;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s ease-out;
+            z-index: 400;
+        }
+
+        .tooltip-wrapper:hover .tooltip-aurora {
+            opacity: 1;
+        }
+
+        body.day .tooltip-aurora {
+            background: #1C1E20;
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        body.night .tooltip-aurora {
+            background: linear-gradient(120deg, #4BE4C9, #5BB7FF);
+            color: #0B1321;
+            font-weight: 600;
+            box-shadow: 0 0 16px rgba(91, 183, 255, 0.6);
+        }
+
+        /* ===== Progress Bar 进度条 ===== */
+        .progress-aurora {
+            width: 100%;
+            height: 8px;
+            border-radius: 999px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body.day .progress-aurora {
+            background: #EEF1F3;
+        }
+
+        body.night .progress-aurora {
+            background: #233043;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 999px;
+            transition: width 0.3s ease;
+        }
+
+        body.day .progress-fill {
+            background: #A8D8F8;
+        }
+
+        body.night .progress-fill {
+            background: linear-gradient(90deg, #4BE4C9, #5BB7FF);
+            box-shadow: 0 0 12px rgba(91, 183, 255, 0.5);
+        }
+
+        .progress-label {
+            font-size: 12px;
+            margin-top: 4px;
+            display: block;
+        }
+
+        body.day .progress-label {
+            color: #6D747A;
+        }
+
+        body.night .progress-label {
+            color: #F1F6FF;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .component-showcase {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .select-aurora,
+            .input-aurora {
+                width: 100%;
+            }
+
+            .btn-aurora {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .toast-container {
+                left: 20px;
+                right: 20px;
+            }
+
+            .toast-aurora {
+                min-width: auto;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body class="day">
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="header">
+            <h1>Aurora 主题 UI 组件完整预览</h1>
+            <p>灵感源自挪威特罗姆瑟的"白昼雪山 / 夜幕极光" — 完整的设计系统展示</p>
+
+            <!-- 主题切换 - 改进版：使用图标 + 清晰的状态指示 -->
+            <div class="theme-toggle-wrapper switch-with-icons">
+                <span class="switch-icon active" id="dayIcon">☀️</span>
+                <button role="switch"
+                        class="switch-aurora"
+                        id="themeSwitch"
+                        data-checked="false"
+                        aria-checked="false"
+                        aria-label="切换日夜主题">
+                    <div class="switch-thumb"></div>
+                </button>
+                <span class="switch-icon" id="nightIcon">🌙</span>
+            </div>
+        </header>
+
+        <!-- Button 按钮 -->
+        <section class="component-section">
+            <h2 class="section-title">1. Button 按钮组件</h2>
+            <p class="section-description">Day Mode 为冷色柔光胶囊形，Night Mode 为极光渐变光晕效果</p>
+            <div class="component-showcase">
+                <div class="demo-group">
+                    <button class="btn-aurora">Primary Button</button>
+                    <span class="state-label">Normal</span>
+                </div>
+                <div class="demo-group">
+                    <button class="btn-aurora" disabled>Disabled Button</button>
+                    <span class="state-label">Disabled</span>
+                </div>
+                <div class="demo-group">
+                    <button class="btn-aurora loading">
+                        <span class="spinner"></span>
+                        Loading...
+                    </button>
+                    <span class="state-label">Loading</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Input 输入框 -->
+        <section class="component-section">
+            <h2 class="section-title">2. Input 文本输入框组件</h2>
+            <p class="section-description">柔和圆角输入框，focus 时带外发光效果，支持多种状态</p>
+            <div class="component-showcase">
+                <div class="demo-group">
+                    <input type="text" class="input-aurora" placeholder="Normal input...">
+                    <span class="state-label">Normal</span>
+                </div>
+                <div class="demo-group">
+                    <input type="text" class="input-aurora" placeholder="Disabled..." disabled>
+                    <span class="state-label">Disabled</span>
+                </div>
+                <div class="demo-group">
+                    <input type="text" class="input-aurora error" value="error@example" placeholder="Error state...">
+                    <span class="state-label">Error</span>
+                </div>
+                <div class="demo-group">
+                    <input type="text" class="input-aurora success" value="success@example.com" placeholder="Success state...">
+                    <span class="state-label">Success</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Select 下拉框 -->
+        <section class="component-section">
+            <h2 class="section-title">3. Select 下拉框组件</h2>
+            <p class="section-description">胶囊形下拉选择框，hover 和 focus 时有边框高亮</p>
+            <div class="component-showcase">
+                <div class="demo-group">
+                    <select class="select-aurora" aria-label="主题选择">
+                        <option>请选择主题</option>
+                        <option>雪山纯净</option>
+                        <option>极光迷人</option>
+                        <option>冰川蓝调</option>
+                    </select>
+                    <span class="state-label">Normal</span>
+                </div>
+                <div class="demo-group">
+                    <select class="select-aurora" disabled aria-label="禁用选择">
+                        <option>禁用状态</option>
+                    </select>
+                    <span class="state-label">Disabled</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Checkbox 复选框 -->
+        <section class="component-section">
+            <h2 class="section-title">4. Checkbox 复选框组件</h2>
+            <p class="section-description">方形勾选框，Night Mode 选中时带极光渐变和光晕</p>
+            <div class="component-showcase">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" class="checkbox-aurora" aria-label="同意服务条款">
+                    <span>同意服务条款</span>
+                </label>
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" class="checkbox-aurora" checked aria-label="接收通知">
+                    <span>接收通知</span>
+                </label>
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" class="checkbox-aurora" disabled aria-label="禁用选项">
+                    <span>禁用选项</span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Radio 单选框 -->
+        <section class="component-section">
+            <h2 class="section-title">5. Radio 单选框组件</h2>
+            <p class="section-description">圆形单选框，选中时内部填充主题色圆点</p>
+            <div class="component-showcase">
+                <label class="radio-wrapper">
+                    <input type="radio" name="plan" class="radio-aurora" checked aria-label="基础版">
+                    <span>基础版</span>
+                </label>
+                <label class="radio-wrapper">
+                    <input type="radio" name="plan" class="radio-aurora" aria-label="专业版">
+                    <span>专业版</span>
+                </label>
+                <label class="radio-wrapper">
+                    <input type="radio" name="plan" class="radio-aurora" aria-label="企业版">
+                    <span>企业版</span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Switch 开关 -->
+        <section class="component-section">
+            <h2 class="section-title">6. Switch 开关组件</h2>
+            <p class="section-description">滑动开关，Night Mode 开启时为极光渐变轨道。改进设计：使用清晰的状态指示，避免两侧标签混淆</p>
+
+            <div class="component-showcase" style="flex-direction: column; align-items: flex-start; gap: 24px;">
+                <!-- 基础 Switch - 关闭状态 -->
+                <div class="demo-group" style="width: 100%;">
+                    <div class="switch-with-label">
+                        <span class="switch-label">通知提醒</span>
+                        <button role="switch"
+                                class="switch-aurora switch-demo"
+                                data-checked="false"
+                                aria-checked="false"
+                                aria-label="通知提醒开关">
+                            <div class="switch-thumb"></div>
+                        </button>
+                        <span class="switch-state-text">关闭</span>
+                    </div>
+                    <span class="state-label">标签在左侧 + 状态文字（推荐）</span>
+                </div>
+
+                <!-- 基础 Switch - 开启状态 -->
+                <div class="demo-group" style="width: 100%;">
+                    <div class="switch-with-label">
+                        <span class="switch-label">自动保存</span>
+                        <button role="switch"
+                                class="switch-aurora switch-demo"
+                                data-checked="true"
+                                aria-checked="true"
+                                aria-label="自动保存开关">
+                            <div class="switch-thumb"></div>
+                        </button>
+                        <span class="switch-state-text">已开启</span>
+                    </div>
+                    <span class="state-label">开启状态</span>
+                </div>
+
+                <!-- 带图标的 Switch - 推荐用于主题切换 -->
+                <div class="demo-group" style="width: 100%;">
+                    <div class="switch-with-icons">
+                        <span class="switch-icon active switch-icon-demo-1">☀️</span>
+                        <button role="switch"
+                                class="switch-aurora switch-demo-with-icons"
+                                id="switchDemo1"
+                                data-checked="false"
+                                aria-checked="false"
+                                aria-label="主题切换开关">
+                            <div class="switch-thumb"></div>
+                        </button>
+                        <span class="switch-icon switch-icon-demo-1">🌙</span>
+                    </div>
+                    <span class="state-label">带图标版本（推荐用于主题切换）</span>
+                </div>
+
+                <!-- 仅开关 - 最简版本 -->
+                <div class="demo-group" style="width: 100%;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span class="switch-label">飞行模式</span>
+                        <button role="switch"
+                                class="switch-aurora switch-demo"
+                                data-checked="false"
+                                aria-checked="false"
+                                aria-label="飞行模式开关">
+                            <div class="switch-thumb"></div>
+                        </button>
+                    </div>
+                    <span class="state-label">最简版本（需配合清晰标签）</span>
+                </div>
+
+                <!-- 反面案例说明 -->
+                <div class="demo-group" style="width: 100%; padding: 16px; border: 2px dashed rgba(255, 100, 100, 0.3); border-radius: 8px;">
+                    <div style="display: flex; align-items: center; gap: 12px; opacity: 0.5;">
+                        <span style="font-size: 14px;">Day</span>
+                        <button role="switch"
+                                class="switch-aurora"
+                                data-checked="false"
+                                aria-checked="false"
+                                style="pointer-events: none;">
+                            <div class="switch-thumb"></div>
+                        </button>
+                        <span style="font-size: 14px;">Night</span>
+                    </div>
+                    <span class="state-label" style="color: #e74c3c;">❌ 反面案例：两侧标签会让用户困惑当前状态</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Card 卡片 -->
+        <section class="component-section">
+            <h2 class="section-title">7. Card 信息卡片组件</h2>
+            <p class="section-description">顶部带强调色条的信息卡片，Day 为雪白面板，Night 带极光渐变</p>
+            <div class="component-showcase">
+                <div class="card-aurora" style="max-width: 360px;">
+                    <h3 class="card-title">Aurora 设计系统</h3>
+                    <p class="card-content">
+                        灵感来自挪威特罗姆瑟的自然景观，将白昼雪山的纯净与夜幕极光的神秘完美融合。
+                        提供日夜双主题，为用户带来舒适的视觉体验。
+                    </p>
+                </div>
+                <div class="card-aurora" style="max-width: 360px;">
+                    <h3 class="card-title">完整组件库</h3>
+                    <p class="card-content">
+                        包含 13 个精心设计的组件，每个组件都支持多种状态，
+                        确保无障碍访问，响应式适配各种设备。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tag 标签 -->
+        <section class="component-section">
+            <h2 class="section-title">8. Tag / Chip 标签组件</h2>
+            <p class="section-description">带小圆点的胶囊标签，Night Mode 带轻微光晕</p>
+            <div class="component-showcase">
+                <span class="tag-aurora">UI Design</span>
+                <span class="tag-aurora">Aurora</span>
+                <span class="tag-aurora">北极光</span>
+                <span class="tag-aurora">雪山</span>
+                <span class="tag-aurora">Day/Night</span>
+                <span class="tag-aurora">响应式</span>
+            </div>
+        </section>
+
+        <!-- Tabs 标签页 -->
+        <section class="component-section">
+            <h2 class="section-title">9. Tabs 标签页组件</h2>
+            <p class="section-description">下划线式标签页，选中项带主题色高亮</p>
+            <div>
+                <div class="tabs-aurora" role="tablist" aria-label="功能展示">
+                    <button class="tab-aurora active"
+                            data-tab="tab1"
+                            role="tab"
+                            aria-selected="true"
+                            aria-controls="panel-1">
+                        概述
+                    </button>
+                    <button class="tab-aurora"
+                            data-tab="tab2"
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="panel-2">
+                        组件
+                    </button>
+                    <button class="tab-aurora"
+                            data-tab="tab3"
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="panel-3">
+                        主题
+                    </button>
+                    <button class="tab-aurora"
+                            data-tab="tab4"
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="panel-4">
+                        文档
+                    </button>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-panel" data-panel="tab1" role="tabpanel" id="panel-1">
+                        Aurora UI 是一套受北极光启发的设计系统，提供优雅的日夜双主题切换体验。
+                    </div>
+                    <div class="tab-panel" data-panel="tab2" style="display: none;" role="tabpanel" id="panel-2">
+                        包含 Button、Input、Select、Card、Tag、Switch、Tabs、Checkbox、Radio、Modal、Toast、Tooltip、Progress Bar 等组件。
+                    </div>
+                    <div class="tab-panel" data-panel="tab3" style="display: none;" role="tabpanel" id="panel-3">
+                        Day Mode 采用冷色柔光设计，Night Mode 融入极光渐变与光晕效果，符合 WCAG AA 标准。
+                    </div>
+                    <div class="tab-panel" data-panel="tab4" style="display: none;" role="tabpanel" id="panel-4">
+                        完整的设计规范文档，包含颜色、尺寸、交互状态、响应式设计和无障碍访问性规范。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tooltip 工具提示 -->
+        <section class="component-section">
+            <h2 class="section-title">10. Tooltip 工具提示组件</h2>
+            <p class="section-description">鼠标悬停时显示的浮动提示，Night Mode 为极光渐变</p>
+            <div class="component-showcase">
+                <div class="tooltip-wrapper">
+                    <button class="btn-aurora" aria-describedby="tooltip-1">悬停查看提示</button>
+                    <div class="tooltip-aurora" role="tooltip" id="tooltip-1">这是一个工具提示</div>
+                </div>
+                <div class="tooltip-wrapper">
+                    <button class="btn-aurora" aria-describedby="tooltip-2">帮助信息</button>
+                    <div class="tooltip-aurora" role="tooltip" id="tooltip-2">点击查看更多详情</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Bar 进度条 -->
+        <section class="component-section">
+            <h2 class="section-title">11. Progress Bar 进度条组件</h2>
+            <p class="section-description">进度指示器，Night Mode 带极光渐变和光晕</p>
+            <div class="component-showcase" style="flex-direction: column; width: 100%; max-width: 600px;">
+                <div style="width: 100%;">
+                    <div class="progress-aurora" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-fill" style="width: 35%"></div>
+                    </div>
+                    <span class="progress-label">上传进度: 35%</span>
+                </div>
+                <div style="width: 100%;">
+                    <div class="progress-aurora" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-fill" style="width: 65%"></div>
+                    </div>
+                    <span class="progress-label">下载进度: 65%</span>
+                </div>
+                <div style="width: 100%;">
+                    <div class="progress-aurora" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-fill" style="width: 90%"></div>
+                    </div>
+                    <span class="progress-label">安装进度: 90%</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal 和 Toast 触发按钮 -->
+        <section class="component-section">
+            <h2 class="section-title">12. Modal 模态框 & Toast 通知</h2>
+            <p class="section-description">点击按钮触发模态框和通知提示</p>
+            <div class="component-showcase">
+                <button class="btn-aurora" id="openModalBtn">打开 Modal</button>
+                <button class="btn-aurora" id="showToastBtn">显示 Toast 通知</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Toast 容器 -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Modal 模态框 (初始隐藏) -->
+    <div class="modal-backdrop-aurora" id="modalBackdrop" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-aurora">
+            <button class="modal-close" id="closeModalBtn" aria-label="关闭对话框">&times;</button>
+            <h2 class="modal-header" id="modal-title">Aurora Modal 示例</h2>
+            <div class="modal-body">
+                <p>这是一个模态框示例，展示了 Aurora 主题的模态框设计。</p>
+                <p>Day Mode 带背景模糊效果，Night Mode 顶部有极光渐变条装饰。</p>
+            </div>
+            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                <button class="btn-aurora" id="modalCancelBtn">取消</button>
+                <button class="btn-aurora" id="modalConfirmBtn">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 主题切换功能
+        const themeSwitch = document.getElementById('themeSwitch');
+        const dayIcon = document.getElementById('dayIcon');
+        const nightIcon = document.getElementById('nightIcon');
+        const body = document.body;
+
+        themeSwitch.addEventListener('click', function() {
+            const isChecked = this.getAttribute('data-checked') === 'true';
+
+            if (isChecked) {
+                this.setAttribute('data-checked', 'false');
+                this.setAttribute('aria-checked', 'false');
+                body.classList.remove('night');
+                body.classList.add('day');
+                // 更新图标状态
+                dayIcon.classList.add('active');
+                nightIcon.classList.remove('active');
+            } else {
+                this.setAttribute('data-checked', 'true');
+                this.setAttribute('aria-checked', 'true');
+                body.classList.remove('day');
+                body.classList.add('night');
+                // 更新图标状态
+                dayIcon.classList.remove('active');
+                nightIcon.classList.add('active');
+            }
+        });
+
+        // 键盘支持 - Space 键切换主题
+        themeSwitch.addEventListener('keydown', function(e) {
+            if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+
+        // Switch 开关演示功能
+        const switches = document.querySelectorAll('.switch-demo');
+        switches.forEach(switchEl => {
+            switchEl.addEventListener('click', function() {
+                const isChecked = this.getAttribute('data-checked') === 'true';
+                const newState = isChecked ? 'false' : 'true';
+                this.setAttribute('data-checked', newState);
+                this.setAttribute('aria-checked', newState);
+
+                // 更新状态文字（如果存在）
+                const wrapper = this.closest('.switch-with-label');
+                if (wrapper) {
+                    const stateText = wrapper.querySelector('.switch-state-text');
+                    if (stateText) {
+                        stateText.textContent = newState === 'true' ? '已开启' : '关闭';
+                    }
+                }
+            });
+
+            // 键盘支持
+            switchEl.addEventListener('keydown', function(e) {
+                if (e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+
+        // 带图标的 Switch 演示功能
+        const switchWithIconsDemo = document.getElementById('switchDemo1');
+        if (switchWithIconsDemo) {
+            switchWithIconsDemo.addEventListener('click', function() {
+                const isChecked = this.getAttribute('data-checked') === 'true';
+                const newState = isChecked ? 'false' : 'true';
+                this.setAttribute('data-checked', newState);
+                this.setAttribute('aria-checked', newState);
+
+                // 更新图标状态
+                const icons = document.querySelectorAll('.switch-icon-demo-1');
+                if (newState === 'true') {
+                    icons[0].classList.remove('active'); // Sun
+                    icons[1].classList.add('active');    // Moon
+                } else {
+                    icons[0].classList.add('active');    // Sun
+                    icons[1].classList.remove('active'); // Moon
+                }
+            });
+
+            // 键盘支持
+            switchWithIconsDemo.addEventListener('keydown', function(e) {
+                if (e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        }
+
+        // Tabs 标签页切换功能
+        const tabs = document.querySelectorAll('.tab-aurora');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('click', function() {
+                const targetTab = this.getAttribute('data-tab');
+
+                // 移除所有 active 类和 aria-selected
+                tabs.forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                });
+
+                // 添加当前 active 类
+                this.classList.add('active');
+                this.setAttribute('aria-selected', 'true');
+
+                // 隐藏所有面板
+                tabPanels.forEach(panel => {
+                    panel.style.display = 'none';
+                });
+
+                // 显示对应面板
+                const targetPanel = document.querySelector(`[data-panel="${targetTab}"]`);
+                if (targetPanel) {
+                    targetPanel.style.display = 'block';
+                }
+            });
+
+            // 键盘导航
+            tab.addEventListener('keydown', function(e) {
+                let newIndex;
+
+                if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    newIndex = (index + 1) % tabs.length;
+                    tabs[newIndex].focus();
+                    tabs[newIndex].click();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    newIndex = (index - 1 + tabs.length) % tabs.length;
+                    tabs[newIndex].focus();
+                    tabs[newIndex].click();
+                } else if (e.key === 'Home') {
+                    e.preventDefault();
+                    tabs[0].focus();
+                    tabs[0].click();
+                } else if (e.key === 'End') {
+                    e.preventDefault();
+                    tabs[tabs.length - 1].focus();
+                    tabs[tabs.length - 1].click();
+                }
+            });
+        });
+
+        // Modal 模态框功能
+        const modalBackdrop = document.getElementById('modalBackdrop');
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modalCancelBtn = document.getElementById('modalCancelBtn');
+        const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+
+        function openModal() {
+            modalBackdrop.style.display = 'flex';
+            // 焦点管理
+            closeModalBtn.focus();
+            // 禁用背景滚动
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modalBackdrop.style.display = 'none';
+            // 恢复焦点
+            openModalBtn.focus();
+            // 恢复滚动
+            document.body.style.overflow = '';
+        }
+
+        openModalBtn.addEventListener('click', openModal);
+        closeModalBtn.addEventListener('click', closeModal);
+        modalCancelBtn.addEventListener('click', closeModal);
+        modalConfirmBtn.addEventListener('click', function() {
+            showToast('操作成功', '您的操作已成功完成！');
+            closeModal();
+        });
+
+        // 点击背景关闭
+        modalBackdrop.addEventListener('click', function(e) {
+            if (e.target === modalBackdrop) {
+                closeModal();
+            }
+        });
+
+        // ESC 键关闭
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalBackdrop.style.display === 'flex') {
+                closeModal();
+            }
+        });
+
+        // Toast 通知功能
+        const toastContainer = document.getElementById('toastContainer');
+        const showToastBtn = document.getElementById('showToastBtn');
+
+        function showToast(title, message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-aurora';
+            toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'polite');
+            toast.innerHTML = `
+                <div class="toast-title">${title}</div>
+                <div class="toast-message">${message}</div>
+            `;
+
+            toastContainer.appendChild(toast);
+
+            // 3秒后自动移除
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        showToastBtn.addEventListener('click', function() {
+            showToast('通知标题', '这是一条 Aurora 主题的通知消息，将在 3 秒后自动消失。');
+        });
+    </script>
+</body>
+</html>
