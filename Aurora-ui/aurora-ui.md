@@ -8,6 +8,7 @@
 
 ## 目录
 
+0. 设计原则
 1. 主题系统简介
 2. 组件展示页面结构
 3. 设计系统基础
@@ -26,11 +27,104 @@
 16. Toast / Notification 通知组件
 17. Tooltip 工具提示组件
 18. Progress Bar 进度条组件
-19. 组件状态规范
-20. 响应式设计规范
-21. 无障碍访问性规范
-22. Day / Night 主题切换机制说明
-23. 示例代码生成提示（供模型生成 HTML 使用）
+19. Badge 徽章组件
+20. Avatar 头像组件
+21. Breadcrumb 面包屑组件
+22. Divider 分隔线组件
+23. Slider 滑块组件
+24. Dropdown 下拉菜单组件
+25. Pagination 分页组件
+26. Skeleton 骨架屏组件
+27. Empty State 空状态组件
+28. Stepper 步骤条组件
+29. 组件状态规范
+30. 响应式设计规范
+31. 无障碍访问性规范
+32. Day / Night 主题切换机制说明
+33. 示例代码生成提示（供模型生成 HTML 使用）
+
+---
+
+# 0. 🧭 设计原则
+
+Aurora 主题不仅是一套 UI 组件库，更是一个完整的设计语言系统，灵感源自挪威特罗姆瑟的自然奇观。
+
+---
+
+## 0.1 核心理念
+
+### 1️⃣ 纯净如雪（Day Mode）
+* **极简主义**：去除多余装饰，专注内容本身
+* **充足留白**：像雪原般的呼吸感，给用户思考空间
+* **柔和光影**：阳光下的雪山有温和的阴影层次
+* **冷静克制**：使用冷色调营造专业、可信赖的氛围
+
+### 2️⃣ 流动如光（Night Mode）
+* **动态渐变**：极光的色彩从绿到蓝到紫到粉自然流动
+* **光晕效果**：Glow 营造神秘、科技感的夜空氛围
+* **跃动活力**：微动画让界面"活"起来，如极光舞动
+* **深邃背景**：深色背景减少眼部疲劳，适合长时间使用
+
+### 3️⃣ 层次如山
+* **视觉海拔**：重要信息"海拔"更高（更大、更亮、更前）
+* **阴影深度**：用 box-shadow 模拟雪山的层叠感
+* **Z-index 系统**：从 Base(0) 到 Toast(700) 的清晰层级
+* **信息密度**：避免扁平化导致的混乱，用深度引导视线
+
+### 4️⃣ 亲切可达
+* **WCAG AA 标准**：所有色彩对比度符合无障碍规范
+* **键盘友好**：全组件支持键盘导航和焦点管理
+* **屏幕阅读器**：完善的 ARIA 属性和语义化标签
+* **包容性设计**：考虑色盲、低视力、运动障碍等用户
+
+---
+
+## 0.2 设计隐喻
+
+| 设计元素 | 自然隐喻 | 实现方式 |
+|---------|---------|---------|
+| **圆角** | 融化的冰雪边缘 | 胶囊形（999px）柔和圆润 |
+| **极光渐变** | 绿→蓝→紫→粉的自然过渡 | `linear-gradient(120deg, #4BE4C9, #5BB7FF, #C68CFF, #FF6EC7)` |
+| **阴影** | 雪山的海拔层次 | Day Mode 明确阴影，Night Mode 光晕 |
+| **动画缓动** | 极光的柔和流动 | `cubic-bezier(0.4, 0, 0.2, 1)` |
+| **背景微动** | 极光的缓慢舞动 | 15s 渐变位移动画 |
+
+---
+
+## 0.3 设计决策依据
+
+### 为什么选择胶囊形圆角？
+* ✅ 更符合极光的流动、柔和特质
+* ✅ 现代化的视觉语言（iOS、Material You 趋势）
+* ✅ 减少视觉噪音，更统一的风格
+
+### 为什么 Night Mode 用深色背景？
+* ✅ 减少眼部疲劳（夜间使用场景）
+* ✅ 让极光色彩更鲜艳、更突出
+* ✅ 更符合"极夜天空"的主题隐喻
+* ✅ 节省 OLED 屏幕电量
+
+### 为什么强调无障碍？
+* ✅ **道德责任**：设计应服务所有人，不应排斥任何用户
+* ✅ **法律要求**：许多国家/地区有无障碍法规
+* ✅ **商业价值**：全球约 15% 人口有不同程度的障碍
+* ✅ **更好的体验**：无障碍设计让所有用户受益（如键盘导航）
+
+---
+
+## 0.4 使用场景
+
+### ✅ 适合 Aurora 的场景
+* 数据分析平台（Dashboard）
+* SaaS 管理后台
+* 在线协作工具
+* 创意设计工具
+* 科技产品官网
+
+### ⚠️ 不太适合的场景
+* 电商平台（需要更暖色调刺激购买欲）
+* 儿童产品（需要更鲜艳、活泼的色彩）
+* 传统行业（可能需要更保守的设计）
 
 ---
 
@@ -203,6 +297,67 @@ transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
 ---
 
+### Night Mode 背景微动画
+
+**极光流动背景动画：**
+
+```css
+/* 应用到 body.night */
+body.night {
+  background: linear-gradient(135deg, #0B1321 0%, #1A2332 100%);
+  background-size: 200% 200%;
+  animation: aurora-shift 15s ease-in-out infinite;
+}
+
+@keyframes aurora-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+```
+
+**性能优化：**
+
+```css
+/* 尊重用户系统设置 - 禁用动画 */
+@media (prefers-reduced-motion: reduce) {
+  body.night {
+    animation: none;
+  }
+}
+```
+
+**可选：按钮流光效果（Night Mode）：**
+
+```css
+body.night .btn-aurora:hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  to {
+    left: 100%;
+  }
+}
+```
+
+---
+
 ## 3.6 图标系统
 
 ### 推荐图标库
@@ -228,6 +383,106 @@ transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
 ---
 
+## 3.7 圆角规范
+
+Aurora 主题采用**功能导向的差异化圆角策略**，根据组件用途选择不同的圆角大小，既保持设计语言的一致性，又能通过视觉层次引导用户注意力。
+
+---
+
+### 圆角分类
+
+| 圆角类型 | 数值 | 组件 | 设计意图 |
+|---------|------|------|---------|
+| **胶囊形（Pill）** | 999px | Button, Switch, Tag, Progress Bar | 强调操作性和互动感，引导用户点击 |
+| **适中圆角（Medium）** | 16px | Input, Select（原生和自定义触发器） | 数据容器，提供专业感和清晰的输入区域 |
+| **柔和圆角（Soft）** | 20px | Card | 内容展示，平衡视觉舒适度和结构感 |
+| **小圆角（Small）** | 12px | Toast, Dropdown 列表, Modal | 浮动层级元素，保持精致感 |
+| **微圆角（Tiny）** | 4–8px | Checkbox, Pagination 按钮 | 小型交互元素，避免过度圆润 |
+| **圆形（Circle）** | 50% | Radio, Avatar, Badge（圆形） | 完美圆形，用于头像、状态点等 |
+
+---
+
+### 设计决策说明
+
+#### 为什么 Button 使用 999px，而 Input 使用 16px?
+
+**问题背景：**
+最初设计中，Button 和 Input 都使用 999px 胶囊形，导致 Input 输入框看起来过于"圆润"，缺乏专业感，且难以与 Button 区分。
+
+**解决方案：**
+- **Button 保持 999px**：按钮是"操作触发器"，胶囊形能有效传达"可点击"的视觉暗示，符合现代设计趋势（iOS、Material You）
+- **Input/Select 改为 16px**：输入框是"数据容器"，适中的圆角提供专业、清晰的输入区域识别，避免与按钮混淆
+
+**对比效果：**
+```
+优化前：
+[────────●] [──────────] [────────●]  ← 所有元素都是胶囊形，难以区分
+  Button     Input      Select
+
+优化后：
+[────────●] [─────────]  [────────]   ← 通过圆角差异化明确功能
+  Button     Input        Select
+ (999px)    (16px)       (16px)
+  操作       输入         选择
+```
+
+---
+
+### 组件圆角快速参考
+
+| 组件 | 圆角值 | 说明 |
+|------|--------|------|
+| Button | 999px | 胶囊形，强调可点击性 |
+| Input | 16px | 适中圆角，数据输入容器 |
+| Select (原生) | 16px | 与 Input 保持一致 |
+| Select (自定义触发器) | 16px | 与 Input 保持一致 |
+| Select (下拉列表) | 12px | 浮动层级，精致感 |
+| Card | 20px | 柔和圆角，内容展示 |
+| Modal | 16px | 适中圆角，焦点内容 |
+| Toast | 12px | 小圆角，通知提示 |
+| Tag/Badge (胶囊) | 999px | 胶囊形，标签属性 |
+| Switch (轨道) | 999px | 胶囊形，开关特性 |
+| Checkbox | 4px | 微圆角，方形特征 |
+| Radio | 50% | 完美圆形 |
+| Avatar | 50% | 完美圆形（或 12px 方形头像） |
+| Progress Bar | 999px | 胶囊形，进度流动感 |
+| Tooltip | 6px | 微圆角，浮动提示 |
+| Dropdown 列表 | 16px | 与 Select 列表保持一致 |
+| Pagination 按钮 | 8px | 小圆角，紧凑布局 |
+
+---
+
+### 响应式调整
+
+在移动端（<= 768px），部分组件的圆角可以适当增大以匹配更大的触摸目标尺寸：
+
+```css
+@media (max-width: 768px) {
+  .btn-aurora {
+    height: 48px;  /* 从 40px 增大 */
+    border-radius: 999px;  /* 保持胶囊形 */
+  }
+
+  .input-aurora,
+  .select-aurora {
+    height: 48px;  /* 从 40px 增大 */
+    border-radius: 16px;  /* 保持适中圆角，不变 */
+  }
+}
+```
+
+---
+
+### 使用建议
+
+1. **操作类组件优先使用胶囊形（999px）**：Button、Switch、Tag、Badge
+2. **数据容器类组件使用适中圆角（16px）**：Input、Select、Textarea
+3. **内容展示组件使用柔和圆角（20px）**：Card
+4. **浮动层级组件使用小圆角（12–16px）**：Modal、Toast、Dropdown
+5. **保持同类组件圆角一致性**：所有 Input 类组件使用相同圆角，避免视觉混乱
+
+---
+
 # 4. ❄️ Day Mode（雪山纯净）基础视觉规范
 
 ### 背景与基础色
@@ -236,6 +491,7 @@ transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 | ---- | --------------------- |
 | 页面背景 | `#F8FAFB`             |
 | 卡片背景 | `#FFFFFF` / `#EEF1F3` |
+| 辅助背景 | `#E5E9ED`（冰雪银）      |
 | 边框色  | `#D8DFE4`             |
 | 主文字  | `#1C1E20`             |
 | 次文字  | `#6D747A`             |
@@ -246,11 +502,20 @@ transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 | ------------------- | --------- |
 | 主强调 Ice Blue        | `#A8D8F8` |
 | Hover 强调 Ice Blue 深 | `#8EC8F2` |
+| 朝阳金（特殊强调）          | `#FBBF24` |
+
+### 语义色
+
+| 类型      | 颜色        | 说明       |
+| ------- | --------- | -------- |
+| Success | `#7DD3C0` | 冰雪薄荷绿    |
+| Warning | `#FBBF24` | 朝阳金      |
+| Error   | `#FF8B94` | 雪峰晚霞红    |
 
 ### 阴影
 
 ```css
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 ```
 
 ---
@@ -269,22 +534,45 @@ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 
 ### 极光强调色（Aurora Accent）
 
-| 名称  | 颜色        |
-| --- | --------- |
-| 极光绿 | `#4BE4C9` |
-| 冰川蓝 | `#5BB7FF` |
-| 极光紫 | `#C68CFF` |
+| 名称  | 颜色        | 说明                  |
+| --- | --------- | ------------------- |
+| 极光绿 | `#4BE4C9` | 主要强调色，Success 状态   |
+| 冰川蓝 | `#5BB7FF` | 核心品牌色，Interactive |
+| 极光紫 | `#C68CFF` | 辅助强调色，装饰性         |
+| 极光粉 | `#FF6EC7` | 特殊强调色，Premium 功能  |
+
+### 语义色
+
+| 类型      | 颜色        | 说明        |
+| ------- | --------- | --------- |
+| Success | `#4BE4C9` | 极光绿       |
+| Warning | `#FFD93D` | 极光黄       |
+| Error   | `#FF6B6B` | 极光红       |
 
 ### Aurora Glow（光晕）
 
 ```css
+/* 蓝色光晕（默认） */
 box-shadow: 0 0 18px rgba(91, 183, 255, 0.65);
+
+/* 绿色光晕（Success） */
+box-shadow: 0 0 18px rgba(75, 228, 201, 0.65);
+
+/* 粉色光晕（Premium） */
+box-shadow: 0 0 18px rgba(255, 110, 199, 0.65);
 ```
 
 ### Aurora 渐变（推荐）
 
 ```css
+/* 四色完整渐变 */
+linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 35%, #C68CFF 70%, #FF6EC7 100%);
+
+/* 三色经典渐变 */
 linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 50%, #C68CFF 100%);
+
+/* 双色简约渐变 */
+linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 100%);
 ```
 
 ---
@@ -327,7 +615,7 @@ Padding：8px 20px
 **样式定义：**
 
 ```text
-背景：linear-gradient(120deg, #4BE4C9, #5BB7FF, #C68CFF)
+背景：linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 35%, #C68CFF 70%, #FF6EC7 100%)
 文字颜色：#F1F6FF
 边框：1px solid #4BE4C9
 圆角：999px
@@ -391,7 +679,7 @@ Glow：0 0 18px rgba(91, 183, 255, 0.65)
 背景：#EEF1F3
 边框：1px solid #D8DFE4
 文字颜色：#1C1E20
-圆角：999px
+圆角：16px
 Padding：0 14px
 箭头颜色：#6D747A（浏览器默认）
 阴影：0 2px 4px rgba(0,0,0,0.03)
@@ -425,7 +713,7 @@ cursor: not-allowed;
 背景：#121C2C
 边框：1px solid #233043
 文字颜色：#F1F6FF
-圆角：999px
+圆角：16px
 Padding：0 14px
 箭头颜色：#9BA8C0（浏览器默认）
 ```
@@ -475,7 +763,7 @@ cursor: not-allowed;
 背景：#EEF1F3
 边框：1px solid #D8DFE4
 文字颜色：#1C1E20
-圆角：999px
+圆角：16px
 Padding：0 40px 0 14px（右侧预留箭头空间）
 阴影：0 2px 4px rgba(0,0,0,0.03)
 
@@ -516,7 +804,7 @@ Focus：
 ```text
 背景：#FFFFFF
 边框：1px solid #D8DFE4
-圆角：12px
+圆角：16px
 阴影：0 4px 12px rgba(0,0,0,0.1)
 Padding：8px 0
 最大高度：240px（超出滚动）
@@ -526,7 +814,7 @@ Padding：8px 0
 ```text
 背景：#1A2332
 边框：1px solid #233043
-圆角：12px
+圆角：16px
 阴影：0 4px 16px rgba(0,0,0,0.5)
 ```
 
@@ -775,11 +1063,11 @@ Hover：
 高度：40px
 背景：#FFFFFF
 边框：1px solid #D8DFE4
-圆角：12px
+圆角：16px
 文字颜色：#1C1E20
 占位符颜色：#9AA2A8
-Padding：0 12px
-阴影：0 2px 4px rgba(0,0,0,0.03)
+Padding：0 16px
+阴影：0 2px 6px rgba(0,0,0,0.12)
 字体大小：14px
 ```
 
@@ -807,10 +1095,10 @@ Padding：0 12px
 高度：40px
 背景：#121C2C
 边框：1px solid #233043
-圆角：12px
+圆角：16px
 文字颜色：#F1F6FF
 占位符颜色：#9BA8C0
-Padding：0 12px
+Padding：0 16px
 字体大小：14px
 ```
 
@@ -840,11 +1128,11 @@ Padding：0 12px
 ```text
 背景：#FFFFFF
 边框：1px solid #D8DFE4
-圆角：16px
-Padding：16px 20px
+圆角：20px
+Padding：20px 24px
 标题颜色：#1C1E20
 正文颜色：#6D747A
-阴影：0 4px 10px rgba(0,0,0,0.04)
+阴影：0 4px 12px rgba(0,0,0,0.15)
 ```
 
 可在卡片顶部加一条细细的 Ice Blue 边线作为强调：
@@ -862,8 +1150,8 @@ border-top: 3px solid #A8D8F8;
 ```text
 背景：#121C2C
 边框：1px solid #233043
-圆角：16px
-Padding：16px 20px
+圆角：20px
+Padding：20px 24px
 标题颜色：#F1F6FF
 正文颜色：#9BA8C0
 阴影：0 6px 18px rgba(0,0,0,0.45)
@@ -873,7 +1161,7 @@ Padding：16px 20px
 
 ```css
 border-top: 3px solid transparent;
-background-image: linear-gradient(120deg, #4BE4C9, #5BB7FF, #C68CFF);
+background-image: linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 50%, #C68CFF 100%);
 background-origin: border-box;
 background-clip: padding-box, border-box;
 ```
@@ -997,7 +1285,7 @@ Thumb：
 **开启状态：**
 
 ```text
-轨道背景：linear-gradient(120deg, #4BE4C9, #5BB7FF, #C68CFF)
+轨道背景：linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 35%, #C68CFF 70%, #FF6EC7 100%)
 Thumb：
   背景：#F1F6FF
   外 Glow：0 0 10px rgba(91, 183, 255, 0.8)
@@ -1185,7 +1473,7 @@ Hover 状态：文字颜色稍加深、下划线淡淡出现或颜色变亮。
 
 选中 Tab：
   文字颜色：#F1F6FF
-  下划线：2px 高度，渐变 linear-gradient(120deg, #4BE4C9, #5BB7FF, #C68CFF)
+  下划线：2px 高度，渐变 linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 50%, #C68CFF 100%)
   可选 box-shadow：0 2px 8px rgba(91,183,255,0.6)
 ```
 
@@ -1256,7 +1544,7 @@ opacity: 0.5
 **选中状态：**
 
 ```text
-背景：linear-gradient(120deg, #4BE4C9, #5BB7FF)
+背景：linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 100%)
 边框：2px solid #5BB7FF
 勾选图标颜色：#F1F6FF
 Glow：0 0 8px rgba(91, 183, 255, 0.5)
@@ -1348,7 +1636,7 @@ opacity: 0.5
 边框：2px solid #5BB7FF
 内部圆点：
   尺寸：8x8px
-  背景：linear-gradient(120deg, #4BE4C9, #5BB7FF)
+  背景：linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 100%)
   Glow：0 0 8px rgba(91, 183, 255, 0.5)
 ```
 
@@ -1433,7 +1721,7 @@ Padding：24px
 最大宽度：540px
 阴影：0 16px 60px rgba(0,0,0,0.6)
 边框：1px solid #233043
-可选顶部渐变条：3px solid linear-gradient(120deg, #4BE4C9, #5BB7FF, #C68CFF)
+可选顶部渐变条：3px solid linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 50%, #C68CFF 100%)
 ```
 
 **关闭按钮：**
@@ -1504,9 +1792,9 @@ Padding：12px 16px
 | 类型      | 左侧强调条颜色    | 图标颜色      |
 | ------- | ---------- | --------- |
 | Info    | `#A8D8F8`  | `#A8D8F8` |
-| Success | `#7DD3C0`  | `#5CB85C` |
-| Warning | `#FFD93D`  | `#F0AD4E` |
-| Error   | `#FF6B6B`  | `#D9534F` |
+| Success | `#7DD3C0`  | `#7DD3C0` |
+| Warning | `#FBBF24`  | `#FBBF24` |
+| Error   | `#FF8B94`  | `#FF8B94` |
 
 ---
 
@@ -1520,7 +1808,7 @@ Padding：12px 16px
 Padding：12px 16px
 边框：1px solid #233043
 阴影：0 8px 24px rgba(0,0,0,0.5)
-左侧强调条：3px solid linear-gradient(120deg, #4BE4C9, #5BB7FF)
+左侧强调条：3px solid linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 100%)
 可选 Glow：0 0 16px rgba(91, 183, 255, 0.3)
 ```
 
@@ -1535,7 +1823,7 @@ Padding：12px 16px
 
 | 类型      | 左侧强调条颜色                                   | Glow 颜色                            |
 | ------- | ----------------------------------------- | ---------------------------------- |
-| Info    | `linear-gradient(120deg, #4BE4C9, #5BB7FF)` | `rgba(91, 183, 255, 0.3)`          |
+| Info    | `linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 100%)` | `rgba(91, 183, 255, 0.3)`          |
 | Success | `#4BE4C9`                                 | `rgba(75, 228, 201, 0.3)`          |
 | Warning | `#FFD93D`                                 | `rgba(255, 217, 61, 0.2)`          |
 | Error   | `#FF6B6B`                                 | `rgba(255, 107, 107, 0.3)`         |
@@ -1608,7 +1896,7 @@ transition: 0.15s ease-out
 **样式定义：**
 
 ```text
-背景：linear-gradient(120deg, #4BE4C9, #5BB7FF)
+背景：linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 100%)
 文字颜色：#0B1321
 字体大小：12px
 字体粗细：600
@@ -1692,7 +1980,7 @@ overflow: hidden
 **填充条：**
 
 ```text
-背景：linear-gradient(90deg, #4BE4C9, #5BB7FF)
+背景：linear-gradient(90deg, #4BE4C9 0%, #5BB7FF 100%)
 Glow：0 0 12px rgba(91, 183, 255, 0.5)
 过渡动画：width 0.3s ease
 ```
@@ -1718,13 +2006,838 @@ animation: progress-flow 2s linear infinite;
 
 ---
 
-# 19. 🎭 组件状态规范
+# 19. 🔴 Badge 徽章组件
+
+**类名：** `.badge-aurora`
+
+---
+
+## 19.1 结构
+
+* 小型数字或文本标识
+* 通常附着在图标或文字旁边
+* 用于显示未读数量、状态等
+
+---
+
+## 19.2 Day Mode — Snow Badge
+
+**样式定义（数字徽章）：**
+
+```text
+尺寸：18x18px（小）/ 20x20px（中）
+背景：#FF8B94（Error）/ #7DD3C0（Success）/ #A8D8F8（Info）
+文字颜色：#FFFFFF
+字体大小：10px / 11px
+字体粗细：600
+圆角：999px
+阴影：0 2px 4px rgba(0,0,0,0.12)
+```
+
+**样式定义（文本徽章）：**
+
+```text
+高度：20px
+背景：#A8D8F8
+文字颜色：#1C1E20
+字体大小：11px
+字体粗细：600
+圆角：999px
+Padding：0 8px
+阴影：0 2px 4px rgba(0,0,0,0.12)
+```
+
+**状态变体：**
+
+| 类型    | 背景色       | 文字颜色      | 用途      |
+| ----- | --------- | --------- | ------- |
+| Error | `#FF8B94` | `#FFFFFF` | 错误、警告数量 |
+| Success | `#7DD3C0` | `#FFFFFF` | 完成、成功状态 |
+| Warning | `#FBBF24` | `#1C1E20` | 提醒、待处理  |
+| Info  | `#A8D8F8` | `#1C1E20` | 普通通知    |
+
+---
+
+## 19.3 Night Mode — Aurora Badge
+
+**样式定义（数字徽章）：**
+
+```text
+尺寸：18x18px（小）/ 20x20px（中）
+背景：#FF6B6B（Error）/ #4BE4C9（Success）/ #5BB7FF（Info）
+文字颜色：#FFFFFF
+字体大小：10px / 11px
+字体粗细：600
+圆角：999px
+Glow：0 0 8px rgba(91, 183, 255, 0.6)
+```
+
+**样式定义（文本徽章）：**
+
+```text
+高度：20px
+背景：linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 100%)
+文字颜色：#0B1321
+字体大小：11px
+字体粗细：600
+圆角：999px
+Padding：0 8px
+Glow：0 0 8px rgba(91, 183, 255, 0.5)
+```
+
+**状态变体：**
+
+| 类型    | 背景/渐变                             | Glow 颜色                      |
+| ----- | --------------------------------- | ---------------------------- |
+| Error | `#FF6B6B`                         | `rgba(255, 107, 107, 0.6)`   |
+| Success | `#4BE4C9`                         | `rgba(75, 228, 201, 0.6)`    |
+| Warning | `#FFD93D`                         | `rgba(255, 217, 61, 0.5)`    |
+| Info  | `linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 100%)` | `rgba(91, 183, 255, 0.6)`    |
+
+---
+
+## 19.4 尺寸变体
+
+| 尺寸    | 直径（圆形） | 高度（文本） | 字体大小 |
+| ----- | ------ | ------ | ---- |
+| Small | 16px   | 18px   | 10px |
+| Medium (默认) | 20px   | 22px   | 11px |
+| Large | 24px   | 26px   | 12px |
+
+---
+
+## 19.5 使用场景
+
+**数字徽章：**
+```html
+<button style="position: relative;">
+  <svg>通知图标</svg>
+  <span class="badge-aurora badge-error">3</span>
+</button>
+```
+
+**文本徽章：**
+```html
+<div class="card-aurora">
+  <h3>
+    新功能
+    <span class="badge-aurora badge-info">New</span>
+  </h3>
+</div>
+```
+
+---
+
+## 19.6 无障碍访问
+
+```html
+<!-- 数字徽章 -->
+<span class="badge-aurora" aria-label="3条未读消息">3</span>
+
+<!-- 装饰性徽章 -->
+<span class="badge-aurora" aria-hidden="true">New</span>
+```
+
+---
+
+# 20. 👤 Avatar 头像组件
+
+**类名：** `.avatar-aurora`
+
+---
+
+## 20.1 结构
+
+* 圆形或圆角方形容器
+* 显示用户头像图片、首字母或占位符
+* 可附加在线状态指示器
+
+---
+
+## 20.2 Day Mode — Snow Avatar
+
+**样式定义（图片头像）：**
+
+```text
+尺寸：32x32px（小）/ 40x40px（中）/ 48x48px（大）
+圆角：50%（圆形）或 12px（圆角方形）
+边框：2px solid #D8DFE4
+背景：#EEF1F3（图片加载前）
+阴影：0 2px 6px rgba(0,0,0,0.12)
+```
+
+**样式定义（首字母头像）：**
+
+```text
+尺寸：同上
+背景：#A8D8F8
+文字颜色：#1C1E20
+字体大小：14px / 16px / 18px
+字体粗细：600
+圆角：50%
+```
+
+**在线状态指示器：**
+
+```text
+尺寸：8x8px（小）/ 10x10px（中大）
+位置：右下角
+圆角：50%
+边框：2px solid #FFFFFF
+```
+
+| 状态   | 颜色        |
+| ---- | --------- |
+| 在线   | `#7DD3C0` |
+| 忙碌   | `#FBBF24` |
+| 离线   | `#9AA2A8` |
+| 请勿打扰 | `#FF8B94` |
+
+---
+
+## 20.3 Night Mode — Aurora Avatar
+
+**样式定义（图片头像）：**
+
+```text
+尺寸：32x32px（小）/ 40x40px（中）/ 48x48px（大）
+圆角：50%（圆形）或 12px（圆角方形）
+边框：2px solid #233043
+背景：#121C2C（图片加载前）
+Glow：0 0 12px rgba(91, 183, 255, 0.3)
+```
+
+**样式定义（首字母头像）：**
+
+```text
+尺寸：同上
+背景：linear-gradient(135deg, #4BE4C9 0%, #5BB7FF 100%)
+文字颜色：#0B1321
+字体大小：14px / 16px / 18px
+字体粗细：700
+圆角：50%
+```
+
+**在线状态指示器：**
+
+```text
+尺寸：8x8px（小）/ 10x10px（中大）
+位置：右下角
+圆角：50%
+边框：2px solid #0B1321
+Glow：0 0 6px（对应状态颜色）
+```
+
+| 状态   | 颜色        | Glow                      |
+| ---- | --------- | ------------------------- |
+| 在线   | `#4BE4C9` | `rgba(75, 228, 201, 0.8)` |
+| 忙碌   | `#FFD93D` | `rgba(255, 217, 61, 0.7)` |
+| 离线   | `#6D747A` | 无                         |
+| 请勿打扰 | `#FF6B6B` | `rgba(255, 107, 107, 0.8)` |
+
+---
+
+## 20.4 尺寸变体
+
+| 尺寸    | 直径   | 字体大小 | 状态点 |
+| ----- | ---- | ---- | --- |
+| Small | 32px | 14px | 8px |
+| Medium (默认) | 40px | 16px | 10px |
+| Large | 48px | 18px | 10px |
+| XLarge | 64px | 24px | 12px |
+
+---
+
+## 20.5 头像组（Avatar Group）
+
+**堆叠样式：**
+
+```text
+重叠间距：-8px（中）/ -12px（大）
+Z-index：从右到左递增
+边框：2px solid（背景色）防止重叠混乱
+最多显示：3-4个，超出显示 +N
+```
+
+**示例：**
+```html
+<div class="avatar-group-aurora">
+  <img class="avatar-aurora" src="user1.jpg" alt="用户1">
+  <img class="avatar-aurora" src="user2.jpg" alt="用户2">
+  <img class="avatar-aurora" src="user3.jpg" alt="用户3">
+  <span class="avatar-aurora avatar-count">+5</span>
+</div>
+```
+
+---
+
+## 20.6 无障碍访问
+
+```html
+<!-- 头像图片 -->
+<img class="avatar-aurora" src="avatar.jpg" alt="张三的头像">
+
+<!-- 首字母头像 -->
+<div class="avatar-aurora" role="img" aria-label="张三">
+  张
+</div>
+
+<!-- 带在线状态 -->
+<div class="avatar-wrapper">
+  <img class="avatar-aurora" src="avatar.jpg" alt="张三">
+  <span class="status-indicator" aria-label="在线"></span>
+</div>
+```
+
+---
+
+# 21. 🍞 Breadcrumb 面包屑组件
+
+**类名：** `.breadcrumb-aurora`
+
+---
+
+## 21.1 结构
+
+* 显示当前页面在导航层级中的位置
+* 由多个链接和分隔符组成
+* 雪山攀登路径的隐喻
+
+---
+
+## 21.2 Day Mode — Snow Path Breadcrumb
+
+**样式定义：**
+
+```text
+容器：
+  display: flex
+  align-items: center
+  gap: 8px
+
+链接：
+  颜色：#6D747A
+  字体大小：14px
+  text-decoration: none
+
+当前页面（最后一项）：
+  颜色：#1C1E20
+  字体粗细：600
+  pointer-events: none
+
+分隔符：
+  颜色：#9AA2A8
+  字符：/ 或 > 或 →
+```
+
+**交互：**
+
+```css
+链接 Hover：
+  color: #A8D8F8
+  text-decoration: underline
+```
+
+---
+
+## 21.3 Night Mode — Aurora Trail Breadcrumb
+
+**样式定义：**
+
+```text
+链接：
+  颜色：#9BA8C0
+  字体大小：14px
+
+当前页面：
+  颜色：#F1F6FF
+  字体粗细：600
+  background: linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 100%)
+  -webkit-background-clip: text
+  -webkit-text-fill-color: transparent
+
+分隔符：
+  颜色：#6D747A
+```
+
+**交互：**
+
+```css
+链接 Hover：
+  color: #5BB7FF
+  text-shadow: 0 0 8px rgba(91, 183, 255, 0.5)
+```
+
+---
+
+## 21.4 无障碍访问
+
+```html
+<nav aria-label="面包屑导航" class="breadcrumb-aurora">
+  <ol style="display: flex; list-style: none; gap: 8px;">
+    <li>
+      <a href="/">首页</a>
+    </li>
+    <li aria-hidden="true">/</li>
+    <li>
+      <a href="/products">产品</a>
+    </li>
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">详情</li>
+  </ol>
+</nav>
+```
+
+---
+
+# 22. ➖ Divider 分隔线组件
+
+**类名：** `.divider-aurora`
+
+---
+
+## 22.1 结构
+
+* 水平或垂直分隔线
+* 可包含文字标签
+* 用于内容分隔
+
+---
+
+## 22.2 Day Mode — Snow Line Divider
+
+**样式定义（水平线）：**
+
+```text
+高度：1px
+背景：#D8DFE4
+margin：16px 0
+```
+
+**样式定义（带文字）：**
+
+```text
+文字颜色：#6D747A
+字体大小：12px
+两侧线条：1px solid #D8DFE4
+gap：12px
+```
+
+**样式定义（垂直线）：**
+
+```text
+宽度：1px
+背景：#D8DFE4
+高度：100%（或指定高度）
+margin：0 16px
+```
+
+---
+
+## 22.3 Night Mode — Aurora Line Divider
+
+**样式定义（水平线）：**
+
+```text
+高度：1px
+背景：linear-gradient(90deg, transparent, #233043 50%, transparent)
+margin：20px 0
+```
+
+**样式定义（带文字）：**
+
+```text
+文字颜色：#9BA8C0
+字体大小：12px
+两侧线条：1px solid #233043
+可选 Glow：0 0 8px rgba(91, 183, 255, 0.2)
+```
+
+---
+
+# 23. 🎚️ Slider 滑块组件
+
+**类名：** `.slider-aurora`
+
+---
+
+## 23.1 结构
+
+* 轨道（Track）
+* 滑块（Thumb）
+* 填充条（Fill）
+* 可选数值显示
+
+---
+
+## 23.2 Day Mode — Snow Slider
+
+**轨道：**
+
+```text
+高度：6px
+背景：#EEF1F3
+圆角：999px
+```
+
+**填充条：**
+
+```text
+高度：6px
+背景：#A8D8F8
+圆角：999px
+```
+
+**滑块：**
+
+```text
+尺寸：18x18px
+背景：#FFFFFF
+边框：2px solid #8EC8F2
+圆角：50%
+阴影：0 2px 6px rgba(0,0,0,0.12)
+cursor: grab
+```
+
+**滑块 Hover：**
+
+```css
+transform: scale(1.1)
+box-shadow: 0 4px 8px rgba(0,0,0,0.15)
+```
+
+**滑块 Active（拖动时）：**
+
+```css
+transform: scale(1.15)
+cursor: grabbing
+```
+
+---
+
+## 23.3 Night Mode — Aurora Slider
+
+**轨道：**
+
+```text
+高度：6px
+背景：#233043
+圆角：999px
+```
+
+**填充条：**
+
+```text
+背景：linear-gradient(90deg, #4BE4C9 0%, #5BB7FF 100%)
+Glow：0 0 12px rgba(91, 183, 255, 0.5)
+```
+
+**滑块：**
+
+```text
+尺寸：18x18px
+背景：#F1F6FF
+边框：2px solid #5BB7FF
+圆角：50%
+Glow：0 0 12px rgba(91, 183, 255, 0.6)
+```
+
+**滑块 Hover/Active：**
+
+```css
+Glow：0 0 16px rgba(91, 183, 255, 0.8)
+transform: scale(1.15)
+```
+
+---
+
+## 23.4 无障碍访问
+
+```html
+<div class="slider-aurora">
+  <label for="volume-slider">音量</label>
+  <input type="range"
+         id="volume-slider"
+         min="0"
+         max="100"
+         value="50"
+         aria-valuemin="0"
+         aria-valuemax="100"
+         aria-valuenow="50"
+         aria-label="音量控制">
+  <output>50%</output>
+</div>
+```
+
+---
+
+# 24. 📋 Dropdown 下拉菜单组件
+
+**类名：** `.dropdown-aurora`
+
+---
+
+## 24.1 结构
+
+* 触发按钮
+* 下拉菜单容器
+* 菜单项列表
+* 与 Select 的区别：用于操作菜单，不是表单字段
+
+---
+
+## 24.2 Day Mode — Snow Dropdown
+
+**菜单容器：**
+
+```text
+背景：#FFFFFF
+边框：1px solid #D8DFE4
+圆角：16px
+阴影：0 4px 16px rgba(0,0,0,0.12)
+Padding：8px 0
+最小宽度：180px
+```
+
+**菜单项：**
+
+```text
+Padding：10px 16px
+文字颜色：#1C1E20
+字体大小：14px
+cursor: pointer
+```
+
+**菜单项 Hover：**
+
+```css
+background: #F0F8FF
+```
+
+**分隔线：**
+
+```css
+margin: 8px 0
+height: 1px
+background: #D8DFE4
+```
+
+---
+
+## 23.3 Night Mode — Aurora Dropdown
+
+**菜单容器：**
+
+```text
+背景：#1A2332
+边框：1px solid #233043
+圆角：16px
+阴影：0 6px 24px rgba(0,0,0,0.5)
+Glow：0 0 16px rgba(91, 183, 255, 0.2)
+```
+
+**菜单项 Hover：**
+
+```css
+background: rgba(91, 183, 255, 0.1)
+box-shadow: 0 0 12px rgba(91, 183, 255, 0.15)
+```
+
+---
+
+# 25. 📄 Pagination 分页组件
+
+**类名：** `.pagination-aurora`
+
+---
+
+## 25.1 Day Mode
+
+**容器：**
+
+```text
+display: flex
+gap: 8px
+align-items: center
+```
+
+**页码按钮：**
+
+```text
+尺寸：36x36px
+背景：#FFFFFF
+边框：1px solid #D8DFE4
+圆角：8px
+文字颜色：#1C1E20
+字体大小：14px
+```
+
+**当前页：**
+
+```text
+背景：#A8D8F8
+边框：1px solid #8EC8F2
+文字颜色：#1C1E20
+字体粗细：600
+```
+
+---
+
+## 25.2 Night Mode
+
+**页码按钮：**
+
+```text
+背景：#121C2C
+边框：1px solid #233043
+文字颜色：#F1F6FF
+```
+
+**当前页：**
+
+```text
+背景：linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 100%)
+文字颜色：#0B1321
+Glow：0 0 12px rgba(91, 183, 255, 0.5)
+```
+
+---
+
+# 26. 💀 Skeleton 骨架屏组件
+
+**类名：** `.skeleton-aurora`
+
+---
+
+## 26.1 Day Mode
+
+```text
+背景：linear-gradient(90deg, #EEF1F3 0%, #F8FAFB 50%, #EEF1F3 100%)
+圆角：8px
+animation: skeleton-pulse 1.5s ease-in-out infinite
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+```
+
+---
+
+## 26.2 Night Mode
+
+```text
+背景：linear-gradient(90deg, #121C2C 0%, #1A2332 50%, #121C2C 100%)
+圆角：8px
+动画：同上
+```
+
+---
+
+# 27. 📭 Empty State 空状态组件
+
+**类名：** `.empty-state-aurora`
+
+---
+
+## 27.1 Day Mode
+
+```text
+容器：
+  text-align: center
+  padding: 48px 24px
+
+图标：
+  尺寸：64x64px
+  颜色：#D8DFE4
+
+标题：
+  颜色：#1C1E20
+  字体大小：18px
+  字体粗细：600
+  margin-top：16px
+
+描述：
+  颜色：#6D747A
+  字体大小：14px
+  margin-top：8px
+```
+
+---
+
+## 27.2 Night Mode
+
+```text
+图标：
+  颜色：#233043
+
+标题：
+  颜色：#F1F6FF
+
+描述：
+  颜色：#9BA8C0
+```
+
+---
+
+# 28. 📶 Stepper 步骤条组件
+
+**类名：** `.stepper-aurora`
+
+---
+
+## 28.1 Day Mode
+
+**步骤圆点：**
+
+```text
+尺寸：32x32px
+未完成：
+  背景：#EEF1F3
+  边框：2px solid #D8DFE4
+
+进行中：
+  背景：#A8D8F8
+  边框：2px solid #8EC8F2
+
+已完成：
+  背景：#7DD3C0
+  边框：2px solid #7DD3C0
+  显示 ✓ 图标
+```
+
+**连接线：**
+
+```text
+高度：2px
+背景：#D8DFE4（未完成）/ #A8D8F8（已完成）
+```
+
+---
+
+## 28.2 Night Mode
+
+**步骤圆点：**
+
+```text
+进行中：
+  背景：linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 100%)
+  Glow：0 0 12px rgba(91, 183, 255, 0.6)
+
+已完成：
+  背景：#4BE4C9
+  Glow：0 0 8px rgba(75, 228, 201, 0.5)
+```
+
+---
+
+# 29. 🎭 组件状态规范
 
 本章节定义所有交互组件的通用状态样式，确保一致的用户体验。
 
 ---
 
-## 19.1 Button 按钮状态
+## 29.1 Button 按钮状态
 
 ### Disabled（禁用）状态
 
@@ -1786,7 +2899,7 @@ animation: spin 0.8s linear infinite;
 
 ---
 
-## 19.2 Input / Select 表单组件状态
+## 29.2 Input / Select 表单组件状态
 
 ### Disabled（禁用）状态
 
@@ -1861,7 +2974,7 @@ Glow：0 0 12px rgba(75, 228, 201, 0.4)
 
 ---
 
-## 19.3 Card 卡片状态
+## 29.3 Card 卡片状态
 
 ### Disabled（禁用）状态
 
@@ -1901,7 +3014,7 @@ transform: translateY(-2px)
 
 ---
 
-## 19.4 Switch / Checkbox / Radio 状态
+## 29.4 Switch / Checkbox / Radio 状态
 
 ### Indeterminate（半选）状态（仅 Checkbox）
 
@@ -1919,7 +3032,7 @@ transform: translateY(-2px)
 **Night Mode：**
 
 ```text
-背景：linear-gradient(120deg, #4BE4C9, #5BB7FF)
+背景：linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 100%)
 中间横线图标：
   颜色：#F1F6FF
   Glow：0 0 8px rgba(91, 183, 255, 0.5)

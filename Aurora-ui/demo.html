@@ -31,8 +31,19 @@
 
         /* Night Mode 基础样式 */
         body.night {
-            background-color: #0B1321;
+            background: linear-gradient(135deg, #0B1321 0%, #1A2332 100%);
+            background-size: 200% 200%;
             color: #F1F6FF;
+            animation: aurora-shift 15s ease-in-out infinite;
+        }
+
+        @keyframes aurora-shift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
         }
 
         /* 焦点指示器 */
@@ -206,7 +217,7 @@
         }
 
         body.night .btn-aurora {
-            background: linear-gradient(120deg, #4BE4C9, #5BB7FF, #C68CFF);
+            background: linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 35%, #C68CFF 70%, #FF6EC7 100%);
             color: #F1F6FF;
             border-color: #4BE4C9;
             box-shadow: 0 0 18px rgba(91, 183, 255, 0.65);
@@ -275,8 +286,8 @@
         .input-aurora {
             width: 300px;
             height: 40px;
-            border-radius: 12px;
-            padding: 0 12px;
+            border-radius: 16px;
+            padding: 0 16px;
             font-size: 14px;
             border: 1px solid;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -287,7 +298,7 @@
             background: #FFFFFF;
             border-color: #D8DFE4;
             color: #1C1E20;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
         }
 
         body.day .input-aurora::placeholder {
@@ -376,7 +387,7 @@
         .select-aurora {
             width: 240px;
             height: 40px;
-            border-radius: 999px;
+            border-radius: 16px;
             padding: 0 14px;
             font-size: 14px;
             border: 1px solid;
@@ -444,7 +455,7 @@
         .select-trigger {
             width: 100%;
             height: 40px;
-            border-radius: 999px;
+            border-radius: 16px;
             padding: 0 40px 0 14px;
             font-size: 14px;
             border: 1px solid;
@@ -737,7 +748,7 @@
         }
 
         body.night .checkbox-aurora:checked {
-            background: linear-gradient(120deg, #4BE4C9, #5BB7FF);
+            background: linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 35%, #C68CFF 70%, #FF6EC7 100%);
             border-color: #5BB7FF;
             box-shadow: 0 0 8px rgba(91, 183, 255, 0.5);
         }
@@ -834,14 +845,14 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: linear-gradient(120deg, #4BE4C9, #5BB7FF);
+            background: linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 35%, #C68CFF 70%, #FF6EC7 100%);
             box-shadow: 0 0 8px rgba(91, 183, 255, 0.5);
         }
 
         /* ===== Card 卡片 ===== */
         .card-aurora {
-            border-radius: 16px;
-            padding: 16px 20px;
+            border-radius: 20px;
+            padding: 20px 24px;
             border: 1px solid;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
@@ -860,7 +871,7 @@
         body.day .card-aurora {
             background: #FFFFFF;
             border-color: #D8DFE4;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         body.day .card-aurora::before {
@@ -879,7 +890,7 @@
         }
 
         body.night .card-aurora::before {
-            background: linear-gradient(120deg, #4BE4C9, #5BB7FF, #C68CFF);
+            background: linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 35%, #C68CFF 70%, #FF6EC7 100%);
         }
 
         body.night .card-aurora:hover {
@@ -986,7 +997,7 @@
         }
 
         body.night .switch-aurora[data-checked="true"] {
-            background: linear-gradient(120deg, #4BE4C9, #5BB7FF, #C68CFF);
+            background: linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 35%, #C68CFF 70%, #FF6EC7 100%);
         }
 
         .switch-thumb {
@@ -1123,7 +1134,7 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(120deg, #4BE4C9, #5BB7FF, #C68CFF);
+            background: linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 35%, #C68CFF 70%, #FF6EC7 100%);
             box-shadow: 0 2px 8px rgba(91, 183, 255, 0.6);
         }
 
@@ -1185,7 +1196,7 @@
             border: 1px solid #233043;
             box-shadow: 0 16px 60px rgba(0, 0, 0, 0.6);
             border-top: 3px solid transparent;
-            background-image: linear-gradient(#121C2C, #121C2C), linear-gradient(120deg, #4BE4C9, #5BB7FF, #C68CFF);
+            background-image: linear-gradient(#121C2C, #121C2C), linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 35%, #C68CFF 70%, #FF6EC7 100%);
             background-origin: border-box;
             background-clip: padding-box, border-box;
         }
@@ -1319,7 +1330,7 @@
         }
 
         body.night .toast-aurora::before {
-            background: linear-gradient(120deg, #4BE4C9, #5BB7FF);
+            background: linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 35%, #C68CFF 70%, #FF6EC7 100%);
         }
 
         .toast-title {
@@ -1381,7 +1392,7 @@
         }
 
         body.night .tooltip-aurora {
-            background: linear-gradient(120deg, #4BE4C9, #5BB7FF);
+            background: linear-gradient(120deg, #4BE4C9 0%, #5BB7FF 35%, #C68CFF 70%, #FF6EC7 100%);
             color: #0B1321;
             font-weight: 600;
             box-shadow: 0 0 16px rgba(91, 183, 255, 0.6);
@@ -1415,7 +1426,7 @@
         }
 
         body.night .progress-fill {
-            background: linear-gradient(90deg, #4BE4C9, #5BB7FF);
+            background: linear-gradient(90deg, #4BE4C9 0%, #5BB7FF 35%, #C68CFF 70%, #FF6EC7 100%);
             box-shadow: 0 0 12px rgba(91, 183, 255, 0.5);
         }
 
@@ -1464,6 +1475,10 @@
             * {
                 animation-duration: 0.01ms !important;
                 transition-duration: 0.01ms !important;
+            }
+
+            body.night {
+                animation: none;
             }
         }
     </style>
